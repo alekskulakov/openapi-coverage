@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodApi.Web", "FoodApi.Web\FoodApi.Web.csproj", "{EDCF413F-A073-4F0E-A19A-7BB3AAD70610}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodApi.Tests", "FoodApi.Tests\FoodApi.Tests.csproj", "{7EE775BF-71C8-4F3F-9668-0C9088ADB735}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDCF413F-A073-4F0E-A19A-7BB3AAD70610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDCF413F-A073-4F0E-A19A-7BB3AAD70610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDCF413F-A073-4F0E-A19A-7BB3AAD70610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDCF413F-A073-4F0E-A19A-7BB3AAD70610}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EE775BF-71C8-4F3F-9668-0C9088ADB735}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EE775BF-71C8-4F3F-9668-0C9088ADB735}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EE775BF-71C8-4F3F-9668-0C9088ADB735}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EE775BF-71C8-4F3F-9668-0C9088ADB735}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
