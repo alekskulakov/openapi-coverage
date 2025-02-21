@@ -1,10 +1,9 @@
 using System.Diagnostics;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
-using NUnit.Framework;
 
 namespace FoodApi.Tests;
 
+[Category("Menu")]
 public class BasicTests
 {
     private readonly WebApplicationFactory<Program> _factory = new();
@@ -22,7 +21,7 @@ public class BasicTests
         var client = _factory.CreateClient();
 
         // Act
-        var response = await client.GetAsync("/weatherforecast");
+        var response = await client.GetAsync("/menu");
 
         // Assert
         response.EnsureSuccessStatusCode(); // Status Code 200-299
