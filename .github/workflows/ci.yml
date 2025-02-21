@@ -35,4 +35,4 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: Test
-        run: dotnet test {{ matrix.cmd }} --configuration Release --no-build
+        run: dotnet test ${{ matrix.cmd }} --configuration Release --no-build
