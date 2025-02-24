@@ -107,3 +107,4 @@ jobs:
         run: ./swagger-coverage-commandline/bin/swagger-coverage-commandline -s ./swagger.json -i ./openapi-coverage-output
 
       - run: ls -R ./
+      - run: cat swagger-coverage-report.html
