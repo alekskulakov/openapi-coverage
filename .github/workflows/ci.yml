@@ -42,7 +42,7 @@ jobs:
         with:
           retention-days: 1d
           name: cover-${{ matrix.category }}
-          path: ./**/generated_specs/*.json
+          path: ./**/generated_specs
         
   coverage:
     runs-on: ubuntu-latest
