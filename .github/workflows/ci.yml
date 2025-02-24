@@ -37,11 +37,11 @@ jobs:
       - name: Test
         run: dotnet test ${{ matrix.cmd }} --configuration Release --no-build
 
-      - name: Upload coverage results
+      - name: Upload openapi coverage results
         uses: actions/upload-artifact@v4
         with:
           retention-days: 1d
-          name: cover-${{ matrix.category }}
+          name: openapi-coverage-${{ matrix.category }}
           path: ./FoodApi.Tests/bin/generated_specs/*.json
         
   coverage:
@@ -50,6 +50,15 @@ jobs:
     needs: "build"
     
     steps:
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: openapi-coverage
+          pattern: openapi-coverage-*
+          merge-multiple: true
+
+      - run: ls -R openapi-coverage
+
       - name: Cache coverage tool
         id: cache-coverage
         uses: actions/cache@v4
