@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace FoodApi.Tests;
 
-[Category("Menu")]
-public class BasicTests
+[Category("Cooking")]
+public class CookingTests
 {
     private readonly WebApplicationFactory<Program> _factory = new();
 
@@ -14,18 +14,19 @@ public class BasicTests
         _factory.Dispose();
     }
 
-    [TestCase()]
-    public async Task Get_EndpointsReturnSuccessAndCorrectContentType()
+    [TestCase("drink")]
+    [TestCase("fish")]
+    public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string mealId)
     {
         // Arrange
-        var client = _factory.CreateClient();
+        var client = _factory.CreateHttpClient();
 
         // Act
-        var response = await client.GetAsync("/menu");
+        var response = await client.GetAsync($"/meal/{mealId}/cook");
 
         // Assert
         response.EnsureSuccessStatusCode(); // Status Code 200-299
-        Debug.Assert(response.Content.Headers.ContentType != null, "response.Content.Headers.ContentType != null");
+        Debug.Assert(response.Content.Headers.ContentType != null);
         Assert.That(response.Content.Headers.ContentType.ToString(), Is.EqualTo("application/json; charset=utf-8"));
     }
 }
