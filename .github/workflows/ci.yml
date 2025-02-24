@@ -56,11 +56,11 @@ jobs:
       - name: Download All Artifacts
         uses: actions/download-artifact@v4
         with:
-          path: openapi-coverage
+          path: openapi-coverage-output
           pattern: openapi-coverage-*
           merge-multiple: true
 
-      - run: ls -R openapi-coverage
+      - run: ls -R openapi-coverage-output
 
       - name: Delete artifacts
         uses: geekyeggo/delete-artifact@v5
@@ -98,10 +98,12 @@ jobs:
       
       - run: ls -R swagger-coverage-commandline      
       
-      - name: Copy all file to folder
-        run: cp -R ./openapi-coverage ./swagger-coverage-commandline/
+#      - name: Copy all file to folder
+#        run: cp -R ./openapi-coverage ./swagger-coverage-commandline/
+
+      - run: mv ./openapi-coverage-output/swagger.json ./
+
+      - name: Run coverage tool
+        run: ./swagger-coverage-commandline/bin/swagger-coverage-commandline -s ./swagger.json -i ./openapi-coverage-output
 
       - run: ls -R swagger-coverage-commandline
-#        
-#      - name: Run coverage tool
-#        run: ./swagger-coverage-commandline/bin/swagger-coverage-commandline -s ./openapi-coverage/swagger.json -i 
