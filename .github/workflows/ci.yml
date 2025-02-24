@@ -44,7 +44,7 @@ jobs:
           name: openapi-coverage-${{ matrix.category }}
           path: |
             ./FoodApi.Tests/bin/generated_specs/*.json
-            ./swagger.json
+            ./FoodApi.Tests/swagger.json
         
   coverage:
     runs-on: ubuntu-latest
