@@ -1,0 +1,91 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "FoodApi.Web | v1",
+        "version": "1.0.0"
+    },
+    "servers": [{
+            "url": "http://localhost:5025"
+        }
+    ],
+    "paths": {
+        "/menu": {
+            "get": {
+                "tags": [
+                    "FoodApi.Web"
+                ],
+                "operationId": "GetMenu",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Menu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/meal/{id}/cook": {
+            "get": {
+                "tags": [
+                    "FoodApi.Web"
+                ],
+                "parameters": [{
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Menu": {
+                "required": [
+                    "date",
+                    "temperatureC",
+                    "summary"
+                ],
+                "type": "object",
+                "properties": {
+                    "date": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "temperatureC": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "summary": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "temperatureF": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [{
+            "name": "FoodApi.Web"
+        }
+    ]
+}
