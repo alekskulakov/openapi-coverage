@@ -36,6 +36,13 @@ jobs:
 
       - name: Test
         run: dotnet test ${{ matrix.cmd }} --configuration Release --no-build
+
+      - name: Upload coverage results
+        uses: actions/upload-artifact@v4
+        with:
+          retention-days: 1d
+          name: cover-${{ matrix.category }}
+          path: ./**/generated_specs/*.json
         
   coverage:
     runs-on: ubuntu-latest
