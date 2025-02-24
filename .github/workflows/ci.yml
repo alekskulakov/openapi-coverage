@@ -107,4 +107,18 @@ jobs:
         run: ./swagger-coverage-commandline/bin/swagger-coverage-commandline -q -s ./swagger.json -i ./openapi-coverage-output
 
       - run: ls -R ./
-      - run: cat swagger-coverage-report.html
+      - run: cat swagger-coverage-report.html >> $GITHUB_STEP_SUMMARY
+        
+#      - name: Add image tag to comments
+#        uses: actions/github-script@v7
+#        continue-on-error: true
+#        if: ${{ github.event_name == 'pull_request' }}
+#        with:
+#          github-token: ${{github.token}}
+#          script: |
+#            github.rest.issues.createComment({
+#              issue_number: context.issue.number,
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              body: 'Last build image tag `${{ needs.prepare.outputs.image_tag }}`'
+#            })
