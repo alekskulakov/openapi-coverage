@@ -42,7 +42,7 @@ jobs:
         with:
           retention-days: 1d
           name: cover-${{ matrix.category }}
-          path: ./**/generated_specs
+          path: ./FoodApi.Tests/bin/generated_specs/*.json
         
   coverage:
     runs-on: ubuntu-latest
