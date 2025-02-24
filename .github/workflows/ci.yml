@@ -42,7 +42,9 @@ jobs:
         with:
           retention-days: 1d
           name: openapi-coverage-${{ matrix.category }}
-          path: ./FoodApi.Tests/bin/generated_specs/*.json
+          path: |
+            ./FoodApi.Tests/bin/generated_specs/*.json
+            ./swagger.json
         
   coverage:
     runs-on: ubuntu-latest
