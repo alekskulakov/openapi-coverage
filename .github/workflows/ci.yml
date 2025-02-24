@@ -69,11 +69,13 @@ jobs:
         id: cache-coverage
         uses: actions/cache@v4
         with:
-          path: ./swagger-coverage
-          key: ${{ runner.os }}-swagger-coverage
+          path: ./swagger-coverage-commandline
+          key: ${{ runner.os }}-swagger-coverage-commandline
       
       - name: Download swagger-coverage
         if: steps.cache-coverage.outputs.cache-hit != 'true'
         run: |
           wget https://github.com/viclovsky/swagger-coverage/releases/download/1.5.0/swagger-coverage-1.5.0.zip
-          unzip swagger-coverage-1.5.0.zip -d ./swagger-coverage
+          unzip swagger-coverage-1.5.0.zip -d ./swagger-coverage-commandline
+          
+      - run: ls -R swagger-coverage-commandline
