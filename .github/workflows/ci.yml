@@ -59,6 +59,12 @@ jobs:
 
       - run: ls -R openapi-coverage
 
+      - name: Delete artifacts
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          failOnError: false
+          name: openapi-coverage-*
+
       - name: Cache coverage tool
         id: cache-coverage
         uses: actions/cache@v4
