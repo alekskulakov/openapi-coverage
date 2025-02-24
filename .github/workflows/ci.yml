@@ -82,8 +82,6 @@ jobs:
 #          path: ./swagger-coverage-commandline
 #          key: swagger-coverage-commandline
 
-      - run: ls -R swagger-coverage-commandline
-
       - name: Download swagger-coverage
         if: steps.cache-coverage-restore.outputs.cache-hit != 'true'
         run: |
@@ -91,13 +89,15 @@ jobs:
           unzip swagger-coverage-1.5.0.zip
           mv swagger-coverage-commandline-1.5.0 swagger-coverage-commandline
 
-      - name: Restore cache
+      - name: Save cache
         if: steps.cache-coverage-restore.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
         with:
           path: swagger-coverage-commandline
           key: swagger-coverage-commandline
-          
+      
+      - run: ls -R swagger-coverage-commandline      
+      
       - name: Copy all file to folder
         run: cp -R ./openapi-coverage ./swagger-coverage-commandline/
 
