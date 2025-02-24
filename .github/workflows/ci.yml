@@ -37,14 +37,15 @@ jobs:
       - name: Test
         run: dotnet test ${{ matrix.cmd }} --configuration Release --no-build
 
+      - name: Copy actual json
+        run: cp ./FoodApi.Tests/swagger.json ./FoodApi.Tests/bin/generated_specs/swagger.json
+      
       - name: Upload openapi coverage results
         uses: actions/upload-artifact@v4
         with:
           retention-days: 1d
           name: openapi-coverage-${{ matrix.category }}
-          path: |
-            ./FoodApi.Tests/bin/generated_specs/*.json
-            ./FoodApi.Tests/swagger.json
+          path: ./FoodApi.Tests/bin/generated_specs/*.json
         
   coverage:
     runs-on: ubuntu-latest
