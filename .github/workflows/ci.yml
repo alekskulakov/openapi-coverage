@@ -68,12 +68,19 @@ jobs:
           failOnError: false
           name: openapi-coverage-*
 
-      - name: Cache coverage tool
+      - name: Restore cache
         id: cache-coverage
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
-          path: ./swagger-coverage-commandline
-          key: ${{ runner.os }}-swagger-coverage-commandline
+          path: swagger-coverage-commandline
+          key: swagger-coverage-commandline
+
+#      - name: Cache coverage tool
+#        id: cache-coverage
+#        uses: actions/cache@v4
+#        with:
+#          path: ./swagger-coverage-commandline
+#          key: swagger-coverage-commandline
       
       - name: Download swagger-coverage
         if: steps.cache-coverage.outputs.cache-hit != 'true'
@@ -82,10 +89,10 @@ jobs:
           unzip swagger-coverage-1.5.0.zip
           mv swagger-coverage-commandline-1.5.0 swagger-coverage-commandline
           
-      - name: Copy all file to folder
-        run: cp -R ./openapi-coverage ./swagger-coverage-commandline/
+#      - name: Copy all file to folder
+#        run: cp -R ./openapi-coverage ./swagger-coverage-commandline/
 
       - run: ls -R swagger-coverage-commandline
 #        
 #      - name: Run coverage tool
-#        run: ./swagger-coverage-commandline
+#        run: ./swagger-coverage-commandline/bin/swagger-coverage-commandline -s ./openapi-coverage/swagger.json -i 
