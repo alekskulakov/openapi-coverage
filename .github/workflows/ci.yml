@@ -81,7 +81,9 @@ jobs:
         with:
           path: ./swagger-coverage-commandline
           key: swagger-coverage-commandline
-      
+
+      - run: ls -R swagger-coverage-commandline
+
       - name: Download swagger-coverage
         if: steps.cache-coverage.outputs.cache-hit != 'true'
         run: |
