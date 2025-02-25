@@ -125,7 +125,14 @@ jobs:
           -c ./openapi-coverage/config.default.json
           
       - run: ls -R ./
-      - run: cat report.html >> $GITHUB_STEP_SUMMARY
+        
+      - name: Convert HTML to Markdown
+        id: html2markdown
+        uses: rknj/html2markdown@v1.1.0
+        with:
+          html-file: "swagger-coverage-report.html"
+      
+#      - run: cat report.html >> $GITHUB_STEP_SUMMARY
         
 #      - name: Add image tag to comments
 #        uses: actions/github-script@v7
