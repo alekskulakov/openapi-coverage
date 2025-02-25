@@ -75,17 +75,17 @@
                  aria-controls="collapseOne">
                 <div class="col-2">
                     <#if operationResult.processCount == 0>
-                        <span>${i18["common.state.no_call"]}</span>
+                        <span>:red_circle: ${i18["common.state.no_call"]}</span>
                     <#else>
                         <#switch operationResult.state>
                             <#case "FULL">
-                                <span>✅ ${i18["common.state.full"]}</span>
+                                <span>:white_check_mark: ${i18["common.state.full"]}</span>
                                 <#break>
                             <#case "PARTY">
-                                <span>:rocket: ${i18["common.state.partial"]}</span>
+                                <span>:warning: ${i18["common.state.partial"]}</span>
                                 <#break>
                             <#case "EMPTY">
-                                <span>❌ ${i18["common.state.empty"]}</span>
+                                <span>${i18["common.state.empty"]}</span>
                                 <#break>
                             <#default>
                         </#switch>
