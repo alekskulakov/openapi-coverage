@@ -1,8 +1,6 @@
 <#ftl output_format="HTML">
-
 <#global i18=messages>
 <#global operationMap=data.flatOperations>
-
 <#-- @ftlvariable ftlvariable name="data" type="com.github.viclovsky.swagger.coverage.model.SwaggerCoverageResults" -->
 <#import "ui.ftl" as ui/>
 <#import "summary.ftl" as summary />
@@ -10,7 +8,6 @@
 <#import "operation.ftl" as operations />
 <#import "condition.ftl" as condition />
 <#import "tag.ftl" as tag />
-
 <head>
     <meta charset="utf-8">
     <title>Swagger1 Coverage</title>
@@ -30,11 +27,9 @@
         .title {
             margin-top: 60px;
         }
-
         .progress {
             position: relative;
         }
-
         .progress span {
             position: absolute;
             display: block;
@@ -44,7 +39,6 @@
     </style>
 </head>
 <body>
-
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container">
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -69,7 +63,6 @@
         </div>
     </div>
 </nav>
-
 <main role="main" class="container">
     <div class="container">
         <section id="summary-section">
@@ -83,7 +76,6 @@
             <@summary.tags tagsDetail=data.tagCoverageMap tagCounter=data.tagCounter />
             <@summary.conditions counter=data.conditionCounter />
         </section>
-
         <section id="details-section">
             <div class="row">
                 <div class="col-12">
@@ -169,7 +161,6 @@
                 </div>
             </div>
         </section>
-
         <section id="tag-section">
             <div class="row">
                 <div class="col-12">
@@ -178,7 +169,6 @@
             </div>
             <@tag.list tags=data.tagCoverageMap/>
         </section>
-
         <section id="condition-section">
             <div class="row">
                 <div class="col-12">
@@ -295,7 +285,6 @@
                 </div>
             </div>
         </section>
-
         <section id="system-section">
             <div class="row">
                 <div class="col-12">
@@ -318,12 +307,9 @@
                 </div>
             </div>
         </section>
-
         <footer class="page-footer font-small mdb-color lighten-3 pt-4">
             <div class="footer-copyright text-center py-3"></div>
         </footer>
-
     </div>
 </main>
-
 </body>
