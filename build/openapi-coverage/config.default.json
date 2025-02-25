@@ -9,10 +9,5 @@
         "exclude-deprecated": {
             "enable": true
         }
-    },
-    "writers": {
-        "html": {
-            "customTemplatePath": "./openapi-coverage/resources/report.ftl"
-        }
     }
 }

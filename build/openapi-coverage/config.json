@@ -12,6 +12,7 @@
     },
     "writers": {
         "html": {
+            "filename":"report.html",
             "customTemplatePath": "./openapi-coverage/resources/report.ftl"
         }
     }
