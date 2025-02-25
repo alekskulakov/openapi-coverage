@@ -111,10 +111,14 @@ jobs:
       - run: mv ./build/openapi-coverage ./
 
       - name: Run coverage tool
-        run: ./swagger-coverage-commandline/bin/swagger-coverage-commandline -q -s ./swagger.json -i ./openapi-coverage-output
+        run: |
+          ./swagger-coverage-commandline/bin/swagger-coverage-commandline -q \
+          -s ./swagger.json \
+          -i ./openapi-coverage-output \
+          -c ./openapi-coverage/config.json
 
       - run: ls -R ./
-#      - run: cat swagger-coverage-report.html >> $GITHUB_STEP_SUMMARY
+      - run: cat swagger-coverage-report.html >> $GITHUB_STEP_SUMMARY
         
 #      - name: Add image tag to comments
 #        uses: actions/github-script@v7
