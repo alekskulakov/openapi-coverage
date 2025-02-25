@@ -84,9 +84,6 @@
                                 coverage=data.coverageOperationMap.full + data.coverageOperationMap.party + data.coverageOperationMap.empty
                                 prefix="condition"/>
                         </div>
-                        <div class="tab-pane fade" id="full" role="tabpanel" aria-labelledby="full-tab">
-                            <@condition.list coverage=data.coverageOperationMap.full prefix="full"/>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -72,13 +72,6 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <#if counter.all gt 0 >
-					<@ui.progressbar current = counter.covered full = counter.all height=50/>
-            </#if>
-        </div>
-    </div>
 </#macro>
 
 <#macro tags tagsDetail tagCounter>

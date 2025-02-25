@@ -74,27 +74,38 @@
                  aria-expanded="true"
                  aria-controls="collapseOne">
                 <div class="col-2">
-                        <div class="btn btn-sm">${operationResult.state} ${operationResult.operationKey.httpMethod}</div>
-                </div>
-                <div class="col-4">
+                    <#if operationResult.processCount == 0>
+                        <span>${i18["common.state.no_call"]}</span>
+                    <#else>
+                        <#switch operationResult.state>
+                            <#case "FULL">
+                                <span>${i18["common.state.full"]}</span>
+                                <#break>
+                            <#case "PARTY">
+                                <span>${i18["common.state.partial"]}</span>
+                                <#break>
+                            <#case "EMPTY">
+                                <span>${i18["common.state.empty"]}</span>
+                                <#break>
+                            <#default>
+                        </#switch>
+                    </#if>
+                    <span>${operationResult.operationKey.httpMethod}</span>
                     <span>${operationResult.operationKey.path}</span>
-<#--                    <span><small>${operationResult.description}</small></span>-->
+                    <span>${operationResult.processCount} ${i18["details.operation.calls"]}</span>
+                    <#--<div class="btn btn-sm">${operationResult.state} ${operationResult.operationKey.httpMethod}</div>-->
                 </div>
-                <div class="col-2">
+                <#-- <div class="col-4">
+                    <span>${operationResult.operationKey.path}</span>
+                </div>-->
+                <#--<div class="col-2">
                     ${operationResult.processCount} ${i18["details.operation.calls"]}
-                </div>
-                <div class="col-4">
-                    <@ui.progress
-                    full=operationResult.allConditionCount
-                    current=operationResult.coveredConditionCount
-                    postfix=i18["details.conditionprogress.postfix"]
-                    />
-                </div>
+                </div>-->
             </div>
         </div>
-        <div id="${target}" class="collapse" aria-labelledby="headingOne">
+            <#--<div id="${target}" class="collapse" aria-labelledby="headingOne">
             <@conditionList list=operationResult.conditions />
-        </div>
+        </div>-->
     </div>
 </#macro>
 
