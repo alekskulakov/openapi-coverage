@@ -285,31 +285,6 @@
                 </div>
             </div>
         </section>
-        <section id="system-section">
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="title" id="system">${i18["menu.generation"]}</h2>
-                </div>
-            </div>
-            <@generation.data statistic=data.generationStatistics/>
-            <div class="row">
-                <div class="col-12">
-                    <h4>${i18["generation.configuration"]}</h4>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="col-sm">
-                        <div class="alert alert-secondary" role="alert">
-                            <pre>${data.prettyConfiguration} </pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <footer class="page-footer font-small mdb-color lighten-3 pt-4">
-            <div class="footer-copyright text-center py-3"></div>
-        </footer>
     </div>
 </main>
 </body>
