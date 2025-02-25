@@ -120,7 +120,6 @@
             <tbody>
             <#list list as condition>
                 <#assign trStyle = "table-danger">
-
                 <#if condition.covered>
                     <#assign trStyle = "table-success">
                 </#if>
