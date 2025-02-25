@@ -79,13 +79,13 @@
                     <#else>
                         <#switch operationResult.state>
                             <#case "FULL">
-                                <span>${i18["common.state.full"]}</span>
+                                <span>✅ ${i18["common.state.full"]}</span>
                                 <#break>
                             <#case "PARTY">
-                                <span>${i18["common.state.partial"]}</span>
+                                <span>:rocket: ${i18["common.state.partial"]}</span>
                                 <#break>
                             <#case "EMPTY">
-                                <span>${i18["common.state.empty"]}</span>
+                                <span>❌ ${i18["common.state.empty"]}</span>
                                 <#break>
                             <#default>
                         </#switch>
