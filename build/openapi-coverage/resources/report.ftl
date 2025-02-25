@@ -19,7 +19,6 @@
             </div>
             <@summary.operations operationCoveredMap=data.coverageOperationMap />
             <@summary.calls data=data />
-            <@summary.tags tagsDetail=data.tagCoverageMap tagCounter=data.tagCounter />
             <@summary.conditions counter=data.conditionCounter />
         </section>
         <section id="details-section">
@@ -38,37 +37,37 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="full-tab" data-toggle="tab" href="#full" role="tab"
+                            <a class="nav-link" id="full-tab" data-toggle="tab" role="tab"
                                aria-controls="full" aria-selected="true">
                                 ${i18["operations.full"]}: ${data.coverageOperationMap.full?size}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="party-tab" data-toggle="tab" href="#party" role="tab"
+                            <a class="nav-link" id="party-tab" data-toggle="tab" role="tab"
                                aria-controls="party" aria-selected="true">
                                 ${i18["operations.partial"]}: ${data.coverageOperationMap.party?size}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="empty-tab" data-toggle="tab" href="#empty" role="tab"
+                            <a class="nav-link" id="empty-tab" data-toggle="tab" role="tab"
                                aria-controls="empty" aria-selected="true">
                                 ${i18["operations.empty"]}: ${data.coverageOperationMap.empty?size}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="zero-tab" data-toggle="tab" href="#zero" role="tab"
+                            <a class="nav-link" id="zero-tab" data-toggle="tab" role="tab"
                                aria-controls="zero" aria-selected="true">
                                 ${i18["operations.no_call"]}: ${data.zeroCall?size}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="missed-tab" data-toggle="tab" href="#missed" role="tab"
+                            <a class="nav-link" id="missed-tab" data-toggle="tab" role="tab"
                                aria-controls="missed" aria-selected="false">
                                 ${i18["operations.missed"]}: ${data.missed?size}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="deprecated-tab" data-toggle="tab" href="#deprecated" role="tab"
+                            <a class="nav-link" id="deprecated-tab" data-toggle="tab" role="tab"
                                aria-controls="deprecated" aria-selected="false">
                                 ${i18["operations.deprecated"]}: ${data.deprecated?size}
                             </a>
