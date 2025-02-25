@@ -148,7 +148,7 @@ jobs:
             var turndownService = new TurndownService()
             turndownService.use(gfm)
 
-            const fileName = 'swagger-coverage-report';
+            const fileName = 'report';
             const html = fs.readFileSync(fileName + ".html", "utf8");
             var markdown = turndownService.turndown(html)
             fs.writeFileSync("swagger-coverage-report.md", html); 
