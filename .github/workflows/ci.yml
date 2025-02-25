@@ -126,13 +126,25 @@ jobs:
           
       - run: ls -R ./
         
-      - name: Convert HTML to Markdown
-        id: html2markdown
-        uses: rknj/html2markdown@v1.1.0
+#      - name: Convert HTML to Markdown
+#        id: html2markdown
+#        uses: rknj/html2markdown@v1.1.0
+#        with:
+#          html-file: "swagger-coverage-report.html"
+      - uses: actions/setup-node@v4
         with:
-          html-file: "swagger-coverage-report.html"
-      
-#      - run: cat report.html >> $GITHUB_STEP_SUMMARY
+          node-version: '22.14.0'
+
+      - run: npm install turndown
+
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            var TurndownService = require('turndown')
+            var turndownService = new TurndownService()
+            var markdown = turndownService.turndown('<h1>Hello world!</h1>')
+            console.log(markdown)
+        #      - run: cat report.html >> $GITHUB_STEP_SUMMARY
         
 #      - name: Add image tag to comments
 #        uses: actions/github-script@v7
