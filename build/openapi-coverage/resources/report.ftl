@@ -87,21 +87,6 @@
                         <div class="tab-pane fade" id="full" role="tabpanel" aria-labelledby="full-tab">
                             <@condition.list coverage=data.coverageOperationMap.full prefix="full"/>
                         </div>
-                        <div class="tab-pane fade" id="party" role="tabpanel" aria-labelledby="party-tab">
-                            <@condition.list coverage=data.coverageOperationMap.party prefix="party"/>
-                        </div>
-                        <div class="tab-pane fade" id="empty" role="tabpanel" aria-labelledby="empty-tab">
-                            <@condition.list coverage=data.coverageOperationMap.empty prefix="empty"/>
-                        </div>
-                        <div class="tab-pane fade" id="zero" role="tabpanel" aria-labelledby="zero-tab">
-                            <@condition.list coverage=data.zeroCall prefix="zero"/>
-                        </div>
-                        <div class="tab-pane fade" id="missed" role="tabpanel" aria-labelledby="missed-tab">
-                            <@operations.list coverage=data.missed prefix="missed"/>
-                        </div>
-                        <div class="tab-pane fade" id="deprecated" role="tabpanel" aria-labelledby="deprecated-tab">
-                            <@operations.list coverage=data.deprecated prefix="deprecated"/>
-                        </div>
                     </div>
                 </div>
             </div>
