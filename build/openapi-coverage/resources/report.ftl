@@ -9,30 +9,6 @@
 <#import "condition.ftl" as condition />
 <#import "tag.ftl" as tag />
 <body>
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container">
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <a class="navbar-brand" href="#">${data.info.getTitle()!} ${data.info.getVersion()!}</a>
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#summary-section">${i18["menu.summary"]}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#details-section">${i18["menu.operations"]}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#tag-section">${i18["menu.tags"]}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#condition-section">${i18["menu.condition"]}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#system-section">${i18["menu.generation"]}</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
 <main role="main" class="container">
     <div class="container">
         <section id="summary-section">
