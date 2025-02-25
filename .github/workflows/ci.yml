@@ -148,10 +148,19 @@ jobs:
             var turndownService = new TurndownService()
             turndownService.use(gfm)
 
-            const fileName = 'swagger-coverage-report';
+            const fileName = 'report';
             const html = fs.readFileSync(fileName + ".html", "utf8");
             var markdown = turndownService.turndown(html)
-            fs.writeFileSync("swagger-coverage-report.md", markdown); 
+            fs.writeFileSync("swagger-coverage-report.md", markdown);
+            
+            const summary = core.summary;
+  
+            summary.addHeading("My job summary heading", 1);
+            summary.addSeparator();
+            
+            summary.addList(['item1','item2','item3'], true);
+            
+            await summary.write();
             
       - run: cat report.html >> $GITHUB_STEP_SUMMARY
       - run: cat swagger-coverage-report.md >> $GITHUB_STEP_SUMMARY

@@ -31,7 +31,7 @@
                 <div class="col-12">
                     <ul class="nav nav-pills nav-fill" id="detail-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="condition-tab" data-toggle="tab" href="#condition" role="tab"
+                            <a class="nav-link active" id="condition-tab" data-toggle="tab" role="tab"
                                aria-controls="condition" aria-selected="true">
                                 ${i18["operations.all"]}: ${data.operations?size}
                             </a>
