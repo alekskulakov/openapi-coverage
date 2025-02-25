@@ -40,11 +40,18 @@ jobs:
       - name: Copy actual json
         run: cp ./FoodApi.Tests/swagger.json ./FoodApi.Tests/bin/generated_specs/swagger.json
       
+      - name: Upload openapi coverage resources
+        uses: actions/upload-artifact@v4
+        with:
+          retention-days: 1d
+          name: openapi-coverage-resources
+          path: ./build/openapi-coverage
+
       - name: Upload openapi coverage results
         uses: actions/upload-artifact@v4
         with:
           retention-days: 1d
-          name: openapi-coverage-${{ matrix.category }}
+          name: openapi-coverage-output-${{ matrix.category }}
           path: ./FoodApi.Tests/bin/generated_specs/*.json
         
   coverage:
@@ -57,9 +64,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: openapi-coverage-output
-          pattern: openapi-coverage-*
+          pattern: openapi-coverage-output-*
           merge-multiple: true
-
+      
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: openapi-coverage-resources
+  
       - run: ls -R openapi-coverage-output
 
       - name: Delete artifacts
