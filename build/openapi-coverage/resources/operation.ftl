@@ -11,10 +11,7 @@
                          aria-expanded="true"
                          aria-controls="collapseOne">
                         <div class="col-9">
-                            ${key}
-                        </div>
-                        <div class="col-3">
-                            ${i18["details.operation.status"]}: ${value.getResponses()?keys?join(",")}
+                            ${key} ${i18["details.operation.status"]}: ${value.getResponses()?keys?join(",")}
                         </div>
                     </div>
                 </div>

@@ -155,24 +155,24 @@ jobs:
             
             const summary = core.summary;
   
-              core.summary.addRaw('Some content here :speech_balloon:', true)
+             //  core.summary.addRaw('Some content here :speech_balloon:', true)
             // Output: Some content here :speech_balloon:\n
               
               // Add an operating system-specific end-of-line marker
-              core.summary.addEOL()
+            //   core.summary.addEOL()
             // Output (POSIX): \n
             // Output (Windows): \r\n
               
               // Add a codeblock with an optional language for syntax highlighting
-              core.summary.addCodeBlock('console.log(\'hello world\')', 'javascript')
+            //   core.summary.addCodeBlock('console.log(\'hello world\')', 'javascript')
             // Output: <pre lang="javascript"><code>console.log('hello world')</code></pre>
               
               // Add a list, second parameter indicates if list is ordered, defaults to false
-              core.summary.addList(['item1','item2','item3'], true)
+            //  core.summary.addList(['item1','item2','item3'], true)
             // Output: <ol><li>item1</li><li>item2</li><li>item3</li></ol>
               
               // Add a collapsible HTML details element
-              core.summary.addDetails('Label', 'Some detail that will be collapsed')
+            //  core.summary.addDetails('Label', 'Some detail that will be collapsed')
             // Output: <details><summary>Label</summary>Some detail that will be collapsed</details>
               
               // Add an image, image options parameter is optional, you can supply one of or both width and height in pixels
