@@ -1,21 +1,17 @@
 <#import "ui.ftl" as ui/>
 
 <#macro list coverage prefix>
-    <div class="accordion" id="${prefix}-accordion">
+    <div>
         <#list coverage as key, value>
             <div class="card">
                 <div class="card-header">
-                    <div class="row"
-                         data-toggle="collapse"
-                         data-target="#${prefix}-${key?index}"
-                         aria-expanded="true"
-                         aria-controls="collapseOne">
+                    <div class="row">
                         <div class="col-9">
                             ${key} ${i18["details.operation.status"]}: ${value.getResponses()?keys?join(",")}
                         </div>
                     </div>
                 </div>
-                <div id="${prefix}-${key?index}" class="collapse" aria-labelledby="headingOne">
+                <div aria-labelledby="headingOne">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
@@ -77,11 +73,8 @@
                  data-target="#${target}"
                  aria-expanded="true"
                  aria-controls="collapseOne">
-                <div class="col-1">
-                        <@ui.coverageStateBadget operationResult=operationResult />
-                </div>
-                <div class="col-1">
-                        <button type="button" class="btn btn-sm">${operationResult.operationKey.httpMethod}</button>
+                <div class="col-2">
+                        <div class="btn btn-sm">${operationResult.state} ${operationResult.operationKey.httpMethod}</div>
                 </div>
                 <div class="col-4">
                     <span>${operationResult.operationKey.path}</span>
