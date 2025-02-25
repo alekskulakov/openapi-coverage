@@ -4,7 +4,8 @@
         "title": "FoodApi.Web | v1",
         "version": "1.0.0"
     },
-    "servers": [{
+    "servers": [
+        {
             "url": "http://localhost:5025"
         }
     ],
@@ -37,7 +38,8 @@
                 "tags": [
                     "FoodApi.Web"
                 ],
-                "parameters": [{
+                "parameters": [
+                    {
                         "name": "id",
                         "in": "path",
                         "required": true,
@@ -45,6 +47,18 @@
                             "type": "string"
                         }
                     }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/meal/remove": {
+            "get": {
+                "tags": [
+                    "FoodApi.Web"
                 ],
                 "responses": {
                     "200": {
@@ -84,7 +98,8 @@
             }
         }
     },
-    "tags": [{
+    "tags": [
+        {
             "name": "FoodApi.Web"
         }
     ]
