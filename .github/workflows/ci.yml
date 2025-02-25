@@ -140,9 +140,13 @@ jobs:
       - uses: actions/github-script@v7
         with:
           script: |
+            const core = require('@actions/core');
+            const fs = require('fs');
             var TurndownService = require('turndown')
             var turndownService = new TurndownService()
-            var markdown = turndownService.turndown('<h1>Hello world!</h1>')
+            
+            const html = fs.readFileSync("swagger-coverage-report.html", "utf8");
+            var markdown = turndownService.turndown(html)
             console.log(markdown)
         #      - run: cat report.html >> $GITHUB_STEP_SUMMARY
         
