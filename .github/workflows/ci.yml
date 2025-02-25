@@ -155,11 +155,58 @@ jobs:
             
             const summary = core.summary;
   
-            summary.addHeading("My job summary heading", 1);
-            summary.addSeparator();
+              core.summary.addRaw('Some content here :speech_balloon:', true)
+            // Output: Some content here :speech_balloon:\n
+              
+              // Add an operating system-specific end-of-line marker
+              core.summary.addEOL()
+            // Output (POSIX): \n
+            // Output (Windows): \r\n
+              
+              // Add a codeblock with an optional language for syntax highlighting
+              core.summary.addCodeBlock('console.log(\'hello world\')', 'javascript')
+            // Output: <pre lang="javascript"><code>console.log('hello world')</code></pre>
+              
+              // Add a list, second parameter indicates if list is ordered, defaults to false
+              core.summary.addList(['item1','item2','item3'], true)
+            // Output: <ol><li>item1</li><li>item2</li><li>item3</li></ol>
+              
+              // Add a collapsible HTML details element
+              core.summary.addDetails('Label', 'Some detail that will be collapsed')
+            // Output: <details><summary>Label</summary>Some detail that will be collapsed</details>
+              
+              // Add an image, image options parameter is optional, you can supply one of or both width and height in pixels
+            core.summary.addImage('example.png', 'alt description of img', {width: '100', height: '100'})
+            // Output: <img src="example.png" alt="alt description of img" width="100" height="100">
+              
+              // Add an HTML section heading element, optionally pass a level that translates to 'hX' ie. h2. Defaults to h1
+              core.summary.addHeading('My Heading', '2')
+            // Output: <h2>My Heading</h2>
+              
+              // Add an HTML thematic break <hr>
+              core.summary.addSeparator()
+            // Output: <hr>
+              
+              // Add an HTML line break <br>
+              core.summary.addBreak()
+            // Output: <br>
+              
+              // Add an HTML blockquote with an optional citation
+              core.summary.addQuote('To be or not to be', 'Shakespeare')
+            // Output: <blockquote cite="Shakespeare">To be or not to be</blockquote>
+              
+              // Add an HTML anchor tag
+              core.summary.addLink('click here', 'https://github.com')
+            // Output: <a href="https://github.com">click here</a>
+            const tableData = [
+            {data: 'Header1', header: true},
+            {data: 'Header2', header: true},
+            {data: 'Header3', header: true},
+            {data: 'MyData1'},
+            {data: 'MyData2'},
+            {data: 'MyData3'}]
             
-            summary.addList(['item1','item2','item3'], true);
-            
+            core.summary.addTable([tableData])
             await summary.write();
             
       - run: cat report.html >> $GITHUB_STEP_SUMMARY
