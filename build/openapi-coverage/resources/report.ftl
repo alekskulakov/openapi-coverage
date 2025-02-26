@@ -7,11 +7,6 @@
 <#import "generation.ftl" as generation />
 <#import "operation.ftl" as operations />
 <#import "condition.ftl" as condition />
-<style>
-    tr.table-danger {
-        background-color: pink;
-    }
-</style>
 <body>
 <main role="main" class="container">
     <div class="container">

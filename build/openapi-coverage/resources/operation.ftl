@@ -127,6 +127,7 @@
                         <#else>
                             <span>
                                 <i class="fas fa-bug"></i>
+                                :x:
                             </span>
                         </#if>
                         &nbsp;${condition.name}
