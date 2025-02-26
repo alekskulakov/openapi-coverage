@@ -37,8 +37,8 @@ jobs:
       - name: Test
         run: dotnet test ${{ matrix.cmd }} --configuration Release --no-build
 
-      - name: Copy actual json
-        run: cp ./FoodApi.Tests/swagger.json ./FoodApi.Tests/bin/generated_specs/swagger.json
+#      - name: Copy actual json
+#        run: cp ./FoodApi.Tests/swagger.json ./FoodApi.Tests/bin/generated_specs/swagger.json
 
       - name: Upload openapi coverage results
         uses: actions/upload-artifact@v4
