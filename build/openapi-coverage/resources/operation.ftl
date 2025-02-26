@@ -73,7 +73,7 @@
                  data-target="#${target}"
                  aria-expanded="true"
                  aria-controls="collapseOne">
-                <div class="col-2">
+                <div class="col-4">
                     <#--<#if operationResult.processCount == 0>
                         <span class="col-2">:red_circle: ${i18["common.state.no_call"]}</span>
                     <#else>
@@ -95,17 +95,11 @@
                     <span>${operationResult.processCount} ${i18["details.operation.calls"]}</span>
                     <#--<div class="btn btn-sm">${operationResult.state} ${operationResult.operationKey.httpMethod}</div>-->
                 </div>
-                <#-- <div class="col-4">
-                    <span>${operationResult.operationKey.path}</span>
-                </div>-->
-                <#--<div class="col-2">
-                    ${operationResult.processCount} ${i18["details.operation.calls"]}
-                </div>-->
             </div>
         </div>
-            <#--<div id="${target}" class="collapse" aria-labelledby="headingOne">
+        <div id="${target}" class="collapse" aria-labelledby="headingOne">
             <@conditionList list=operationResult.conditions />
-        </div>-->
+        </div>
     </div>
 </#macro>
 
