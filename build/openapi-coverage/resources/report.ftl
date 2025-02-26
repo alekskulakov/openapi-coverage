@@ -7,7 +7,6 @@
 <#import "generation.ftl" as generation />
 <#import "operation.ftl" as operations />
 <#import "condition.ftl" as condition />
-<#import "tag.ftl" as tag />
 <body>
 <main role="main" class="container">
     <div class="container">
@@ -58,9 +57,22 @@
             <div class="row">
                 <div class="col-12">
                     <div class="tab-content" id="details-content">
+                        <h3>:white_check_mark: ${i18["common.state.full"]}</h2>
+                        <div class="tab-pane fade show active" id="condition-full" role="tabpanel" aria-labelledby="condition-tab">
+                            <@condition.list
+                                coverage=data.coverageOperationMap.full
+                                prefix="condition"/>
+                        </div>
+                        <h3>:warning: ${i18["common.state.partial"]}</h2>
+                        <div class="tab-pane fade show active" id="condition-partial" role="tabpanel" aria-labelledby="condition-tab">
+                            <@condition.list
+                                coverage=data.coverageOperationMap.party
+                                prefix="condition"/>
+                        </div>
+                        <h3>:red_circle: ${i18["common.state.no_call"]}</h2>
                         <div class="tab-pane fade show active" id="condition" role="tabpanel" aria-labelledby="condition-tab">
                             <@condition.list
-                                coverage=data.coverageOperationMap.full + data.coverageOperationMap.party + data.coverageOperationMap.empty
+                                coverage=data.coverageOperationMap.empty
                                 prefix="condition"/>
                         </div>
                     </div>

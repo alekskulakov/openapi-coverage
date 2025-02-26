@@ -2,7 +2,7 @@
 
 <#macro list coverage prefix>
     <div class="accordion" id="${prefix}-accordion">
-        <#list coverage as key>
+        <#list coverage?sort_by("path") as key>
             <@operation.details
             name=key
             operationResult=operationMap[key]

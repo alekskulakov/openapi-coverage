@@ -74,7 +74,7 @@
                  aria-expanded="true"
                  aria-controls="collapseOne">
                 <div class="col-2">
-                    <#if operationResult.processCount == 0>
+                    <#--<#if operationResult.processCount == 0>
                         <span class="col-2">:red_circle: ${i18["common.state.no_call"]}</span>
                     <#else>
                         <#switch operationResult.state>
@@ -89,7 +89,7 @@
                                 <#break>
                             <#default>
                         </#switch>
-                    </#if>
+                    </#if>-->
                     <span>${operationResult.operationKey.httpMethod}</span>
                     <span>${operationResult.operationKey.path}</span>
                     <span>${operationResult.processCount} ${i18["details.operation.calls"]}</span>
