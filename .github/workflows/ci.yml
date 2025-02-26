@@ -158,8 +158,13 @@ jobs:
             await summary.write();
             
       - run: cat report.html >> $GITHUB_STEP_SUMMARY
-      - run: cat swagger-coverage-report.md >> $GITHUB_STEP_SUMMARY
-        
+#      - run: cat swagger-coverage-report.md >> $GITHUB_STEP_SUMMARY
+      - name: Upload coverage result
+        uses: actions/upload-artifact@v4
+        with:
+          retention-days: 1d
+          name: openapi-coverage-result
+          path: swagger-coverage-report.html
 #      - name: Add image tag to comments
 #        uses: actions/github-script@v7
 #        continue-on-error: true
