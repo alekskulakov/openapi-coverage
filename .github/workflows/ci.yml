@@ -21,7 +21,8 @@ jobs:
             cmd: --filter TestCategory=Menu
           - category: cooking
             cmd: --filter TestCategory=Cooking
-
+          - category: other
+            cmd: --filter TestCategory=Other
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4

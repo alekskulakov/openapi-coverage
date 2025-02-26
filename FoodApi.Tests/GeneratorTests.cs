@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace FoodApi.Tests;
 
-[Category("Generator")]
+[Category("Other")]
 public class GeneratorTests
 {
     private readonly WebApplicationFactory<Program> _factory = new();
