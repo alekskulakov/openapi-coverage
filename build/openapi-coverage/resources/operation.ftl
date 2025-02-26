@@ -118,7 +118,7 @@
                 <#if condition.covered>
                     <#assign trStyle = "table-success">
                 </#if>
-                <tr class="${trStyle}">
+                <tr class="${trStyle}" style="color:red">
                     <td>
                         <#if condition.covered>
                             <span>
