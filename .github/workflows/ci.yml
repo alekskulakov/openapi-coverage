@@ -107,7 +107,7 @@ jobs:
 #      - name: Copy all file to folder
 #        run: cp -R ./openapi-coverage ./swagger-coverage-commandline/
 
-      - run: mv ./openapi-coverage-output/swagger.json ./
+#      - run: mv ./openapi-coverage-output/swagger.json ./
       - run: mv ./build/openapi-coverage ./
 
       - name: Run coverage tool

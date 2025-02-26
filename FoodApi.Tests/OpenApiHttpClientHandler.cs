@@ -8,7 +8,7 @@ namespace FoodApi.Tests;
 
 public class OpenApiHttpClientHandler : DelegatingHandler
 {
-	private readonly string _folderPath = "../../generated_specs";
+	private readonly string _folderPath = OpenApiHandlerSettings.OutputFolder;
 	protected override async Task<HttpResponseMessage> SendAsync(
 		HttpRequestMessage request,
 		CancellationToken cancellationToken)
@@ -67,15 +67,13 @@ public class OpenApiHttpClientHandler : DelegatingHandler
 			};
 			var filePath = Path.Combine(_folderPath, $"{Guid.NewGuid()}.json");
 
-			if (!string.IsNullOrEmpty(_folderPath))
-			{
-				Directory.CreateDirectory(_folderPath);
-				await using var myFile = File.Create(filePath);
-				myFile.Close();
-				var documentString = document.Serialize(OpenApiSpecVersion.OpenApi3_0, OpenApiFormat.Json);
+			await using var myFile = File.Create(filePath);
+			myFile.Close();
 
-				await File.WriteAllTextAsync(filePath, documentString, cancellationToken);
-			}
+			var documentString = document.Serialize(OpenApiSpecVersion.OpenApi3_0, OpenApiFormat.Json);
+
+			await File.WriteAllTextAsync(filePath, documentString, cancellationToken);
+
 		}
 
 		return response;
