@@ -4,9 +4,10 @@
         "title": "FoodApi.Web | v1",
         "version": "1.0.0"
     },
-    "servers": [{
-        "url": "http://localhost:5025"
-    }
+    "servers": [
+        {
+            "url": "http://localhost:5025"
+        }
     ],
     "paths": {
         "/menu": {
@@ -37,14 +38,15 @@
                 "tags": [
                     "FoodApi.Web"
                 ],
-                "parameters": [{
-                    "name": "id",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
-                }
                 ],
                 "responses": {
                     "200": {
@@ -65,19 +67,29 @@
                 }
             }
         },
-        "/make/{id}/tasty": {
+        "/make/{id}/tasty/{level}": {
             "post": {
                 "tags": [
                     "FoodApi.Web"
                 ],
-                "parameters": [{
-                    "name": "id",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "level",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
                     }
-                }
                 ],
                 "responses": {
                     "200": {
@@ -117,8 +129,9 @@
             }
         }
     },
-    "tags": [{
-        "name": "FoodApi.Web"
-    }
+    "tags": [
+        {
+            "name": "FoodApi.Web"
+        }
     ]
 }

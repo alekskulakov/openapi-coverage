@@ -40,7 +40,7 @@ app.MapGet("/meal/{id}/cook", (string id) =>
 });
 
 app.MapGet("/meal/remove", () => Results.Ok());
-app.MapPost("/make/{id}/tasty", (string id) => Results.Ok(id));
+app.MapPost("/make/{id}/tasty/{level}", (string id, int level) => Results.Ok(id));
 
 app.Run();
 
