@@ -48,7 +48,7 @@ jobs:
         with:
           retention-days: 1d
           name: openapi-coverage-output-${{ matrix.category }}
-          path: ./**/generated_specs/*.json
+          path: ./FoodApi.Tests/bin/generated_specs/*.json
         
   coverage:
     runs-on: ubuntu-latest
