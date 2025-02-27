@@ -36,6 +36,8 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: Test
+        env:
+          ENABLE_SWAGGER_COVERAGE: true
         run: dotnet test ${{ matrix.cmd }} --configuration Release --no-build
 
 #      - name: Copy actual json

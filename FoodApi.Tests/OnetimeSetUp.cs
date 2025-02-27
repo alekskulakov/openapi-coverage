@@ -8,12 +8,12 @@ public class OnetimeSetUp
         [OneTimeSetUp]
         public void SetUp()
         {
-            if (Directory.Exists(OpenApiHandlerSettings.OutputFolder))
+            if (Directory.Exists(SwaggerCoverageSettings.OutputFolder))
             {
-                Directory.Delete(OpenApiHandlerSettings.OutputFolder, true);
+                Directory.Delete(SwaggerCoverageSettings.OutputFolder, true);
             }
             
-            Directory.CreateDirectory(OpenApiHandlerSettings.OutputFolder);
+            Directory.CreateDirectory(SwaggerCoverageSettings.OutputFolder);
         }
     }
 }

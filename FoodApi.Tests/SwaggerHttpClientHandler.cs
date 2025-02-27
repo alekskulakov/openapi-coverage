@@ -1,21 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing.Handlers;
-using Microsoft.OpenApi;
+﻿using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Extensions;
 using Microsoft.OpenApi.Models;
 
 namespace FoodApi.Tests;
 
-public class OpenApiHttpClientHandler : DelegatingHandler
+public class SwaggerHttpClientHandler : DelegatingHandler
 {
-	private readonly string _folderPath = OpenApiHandlerSettings.OutputFolder;
+	private readonly string _folderPath = SwaggerCoverageSettings.OutputFolder;
 	protected override async Task<HttpResponseMessage> SendAsync(
 		HttpRequestMessage request,
 		CancellationToken cancellationToken)
 	{
 		var operation = new OpenApiOperation
 		{
-			Description = "Returns all pets from the system that the user has access to",
 			Responses = new OpenApiResponses(),
 			Parameters = new List<OpenApiParameter>()
 		};
@@ -32,7 +30,7 @@ public class OpenApiHttpClientHandler : DelegatingHandler
 		});
 
 		var queryDictionary = System.Web.HttpUtility.ParseQueryString(request.RequestUri?.Query ?? string.Empty);
-		var tt = request.RequestUri?.Segments;
+
 		foreach (var queryParam in queryDictionary.AllKeys)
 		{
 			if (string.IsNullOrEmpty(queryParam))
@@ -65,15 +63,11 @@ public class OpenApiHttpClientHandler : DelegatingHandler
 					[path] = pathModel
 				}
 			};
-			var filePath = Path.Combine(_folderPath, $"{Guid.NewGuid()}.json");
-
-			await using var myFile = File.Create(filePath);
-			myFile.Close();
 
 			var documentString = document.Serialize(OpenApiSpecVersion.OpenApi3_0, OpenApiFormat.Json);
 
+			var filePath = Path.Combine(_folderPath, $"{Guid.NewGuid()}.json");
 			await File.WriteAllTextAsync(filePath, documentString, cancellationToken);
-
 		}
 
 		return response;
