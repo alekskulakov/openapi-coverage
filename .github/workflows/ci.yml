@@ -79,7 +79,7 @@ jobs:
 
       - run: mv ./openapi-coverage-output/swagger.json ./
 
-      - uses: alekskulakov/ci.actions.swaggercoverage@v1.0.2
+      - uses: alekskulakov/ci.actions.swaggercoverage@v1.0.3
         with:
           spec-path: 'swagger.json'
           input-path: 'openapi-coverage-output'
