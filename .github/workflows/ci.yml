@@ -83,4 +83,4 @@ jobs:
         with:
           spec-path: 'swagger.json'
           input-path: 'openapi-coverage-output'
-          quiet: false
+          quiet: true
