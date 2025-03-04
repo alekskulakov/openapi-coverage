@@ -63,7 +63,12 @@ jobs:
           path: openapi-coverage-output
           pattern: openapi-coverage-output-*
           merge-multiple: true
-
+      
+#      - name: Download All Artifacts
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: openapi-coverage-resources
+  
       - run: ls -R openapi-coverage-output
 
       - name: Delete artifacts
@@ -73,11 +78,8 @@ jobs:
           name: openapi-coverage-*
 
       - run: mv ./openapi-coverage-output/swagger.json ./
+
       - uses: alekskulakov/ci.actions.swaggercoverage@v1.0.0
         with:
           spec-path: 'swagger.json'
           input-path: 'openapi-coverage-output'
-          
-          
-          
-          
