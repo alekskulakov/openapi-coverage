@@ -39,6 +39,9 @@ app.MapGet("/meal/{id}/cook", (string id) =>
     return Results.Ok(id);
 });
 
+app.MapGet("/meal/remove", () => Results.Ok());
+app.MapPost("/make/{id}/tasty/{level}", (string id, int level) => Results.Ok(id));
+
 app.Run();
 
 record Menu(DateOnly Date, int TemperatureC, string? Summary)

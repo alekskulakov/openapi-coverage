@@ -21,7 +21,8 @@ jobs:
             cmd: --filter TestCategory=Menu
           - category: cooking
             cmd: --filter TestCategory=Cooking
-
+          - category: other
+            cmd: --filter TestCategory=Other
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
@@ -35,16 +36,18 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: Test
+        env:
+          ENABLE_SWAGGER_COVERAGE: true
         run: dotnet test ${{ matrix.cmd }} --configuration Release --no-build
 
-      - name: Copy actual json
-        run: cp ./FoodApi.Tests/swagger.json ./FoodApi.Tests/bin/generated_specs/swagger.json
-      
+#      - name: Copy actual json
+#        run: cp ./FoodApi.Tests/swagger.json ./FoodApi.Tests/bin/generated_specs/swagger.json
+
       - name: Upload openapi coverage results
         uses: actions/upload-artifact@v4
         with:
           retention-days: 1d
-          name: openapi-coverage-${{ matrix.category }}
+          name: openapi-coverage-output-${{ matrix.category }}
           path: ./FoodApi.Tests/bin/generated_specs/*.json
         
   coverage:
@@ -53,13 +56,19 @@ jobs:
     needs: "build"
     
     steps:
+      - uses: actions/checkout@v4
       - name: Download All Artifacts
         uses: actions/download-artifact@v4
         with:
           path: openapi-coverage-output
-          pattern: openapi-coverage-*
+          pattern: openapi-coverage-output-*
           merge-multiple: true
-
+      
+#      - name: Download All Artifacts
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: openapi-coverage-resources
+  
       - run: ls -R openapi-coverage-output
 
       - name: Delete artifacts
@@ -102,8 +111,73 @@ jobs:
 #        run: cp -R ./openapi-coverage ./swagger-coverage-commandline/
 
       - run: mv ./openapi-coverage-output/swagger.json ./
+      - run: mv ./build/openapi-coverage ./
 
       - name: Run coverage tool
-        run: ./swagger-coverage-commandline/bin/swagger-coverage-commandline -s ./swagger.json -i ./openapi-coverage-output
+        run: |
+          ./swagger-coverage-commandline/bin/swagger-coverage-commandline -q \
+          -s ./swagger.json \
+          -i ./openapi-coverage-output \
+          -c ./openapi-coverage/config.minimal.json
 
+      - name: Run coverage tool
+        run: |
+          ./swagger-coverage-commandline/bin/swagger-coverage-commandline -q \
+          -s ./swagger.json \
+          -i ./openapi-coverage-output \
+          -c ./openapi-coverage/config.default.json
+          
       - run: ls -R ./
+        
+#      - name: Convert HTML to Markdown
+#        id: html2markdown
+#        uses: rknj/html2markdown@v1.1.0
+#        with:
+#          html-file: "swagger-coverage-report.html"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.14.0'
+
+      - run: npm install turndown@7.2.0 turndown-plugin-gfm@1.0.2
+
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            var TurndownService = require('turndown')
+            var turndownPluginGfm = require('turndown-plugin-gfm')
+
+            var gfm = turndownPluginGfm.gfm
+            var turndownService = new TurndownService()
+            turndownService.use(gfm)
+
+            const fileName = 'report';
+            const html = fs.readFileSync(fileName + ".html", "utf8");
+            var markdown = turndownService.turndown(html)
+            fs.writeFileSync("swagger-coverage-report.md", markdown);
+            
+            const summary = core.summary;
+
+            await summary.write();
+            
+      - run: cat report.html >> $GITHUB_STEP_SUMMARY
+      - run: cat swagger-coverage-report.md >> $GITHUB_STEP_SUMMARY
+      - name: Upload coverage result
+        uses: actions/upload-artifact@v4
+        with:
+          retention-days: 1d
+          name: openapi-coverage-result
+          path: swagger-coverage-report.html
+#      - name: Add image tag to comments
+#        uses: actions/github-script@v7
+#        continue-on-error: true
+#        if: ${{ github.event_name == 'pull_request' }}
+#        with:
+#          github-token: ${{github.token}}
+#          script: |
+#            github.rest.issues.createComment({
+#              issue_number: context.issue.number,
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              body: 'Last build image tag `${{ needs.prepare.outputs.image_tag }}`'
+#            })

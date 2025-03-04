@@ -16,7 +16,8 @@ public static class WebApplicationFactoryExtensions
 
         IEnumerable<DelegatingHandler> CreateHandlersCore()
         {
-            yield return new OpenApiHttpClientHandler();
+            if(SwaggerCoverageSettings.EnableSwaggerCoverage)
+                yield return new SwaggerHttpClientHandler();
 			
             yield return new RedirectHandler(100);
 

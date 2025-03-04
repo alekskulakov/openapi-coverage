@@ -4,7 +4,8 @@
         "title": "FoodApi.Web | v1",
         "version": "1.0.0"
     },
-    "servers": [{
+    "servers": [
+        {
             "url": "http://localhost:5025"
         }
     ],
@@ -37,12 +38,56 @@
                 "tags": [
                     "FoodApi.Web"
                 ],
-                "parameters": [{
+                "parameters": [
+                    {
                         "name": "id",
                         "in": "path",
                         "required": true,
                         "schema": {
                             "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/meal/remove": {
+            "get": {
+                "tags": [
+                    "FoodApi.Web"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/make/{id}/tasty/{level}": {
+            "post": {
+                "tags": [
+                    "FoodApi.Web"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "level",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
                         }
                     }
                 ],
@@ -84,7 +129,8 @@
             }
         }
     },
-    "tags": [{
+    "tags": [
+        {
             "name": "FoodApi.Web"
         }
     ]
