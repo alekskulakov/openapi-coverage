@@ -77,7 +77,7 @@ jobs:
             var threshold = 51
             if(fullPercentage < threshold){
               core.summary.addRaw(`:speech_balloon: The coverage less than ${threshold}`, true)
-              core.error(`The coverage less than ${threshold}`);
+              core.setFailed(`The coverage less than ${threshold}`);
             }
 #            var list = await github.rest.actions.listWorkflowRunsForRepo({
 #                owner: context.repo.owner,
