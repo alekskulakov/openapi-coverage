@@ -73,6 +73,7 @@ jobs:
             console.log(fullPercentage);
             console.log(partialPercentage);
             console.log(emptyPercentage);
+            
 #            var list = await github.rest.actions.listWorkflowRunsForRepo({
 #                owner: context.repo.owner,
 #                repo: context.repo.repo,
