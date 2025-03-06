@@ -47,7 +47,7 @@ jobs:
 #          name: openapi-coverage-output-${{ matrix.category }}
 #          path: ./FoodApi.Tests/bin/generated_specs/*.json
 
-  run-info:
+  coverage-gate:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     
@@ -76,7 +76,8 @@ jobs:
             console.log(emptyPercentage);
             var threshold = 51
             if(fullPercentage < threshold){
-              core.warning(`The coverage less than ${threshold}`);
+              core.summary.addRaw(`:speech_balloon: The coverage less than ${threshold}`, true)
+              core.error(`The coverage less than ${threshold}`);
             }
 #            var list = await github.rest.actions.listWorkflowRunsForRepo({
 #                owner: context.repo.owner,
