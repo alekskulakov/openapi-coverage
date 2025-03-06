@@ -6,73 +6,110 @@ on:
     branches:
       - main
 jobs:
-  build:
+#  build:
+#    runs-on: ubuntu-latest
+#    timeout-minutes: 15
+#
+#    env:
+#      DOTNET_NOLOGO: true
+#      DOTNET_CLI_TELEMETRY_OPTOUT: true
+#
+#    strategy:
+#      matrix:
+#        include:
+#          - category: menu
+#            cmd: --filter TestCategory=Menu
+#          - category: cooking
+#            cmd: --filter TestCategory=Cooking
+#          - category: other
+#            cmd: --filter TestCategory=Other
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: actions/setup-dotnet@v4
+#        with:
+#          dotnet-version: 9.0.x
+#          source-url: ${{ secrets.NUGET_SOURCE }}
+#        env:
+#          NUGET_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
+#
+#      - name: Build
+#        run: dotnet build --configuration Release
+#
+#      - name: Test
+#        env:
+#          ENABLE_SWAGGER_COVERAGE: true
+#        run: dotnet test ${{ matrix.cmd }} --configuration Release --no-build
+#
+#      - name: Upload openapi coverage results
+#        uses: actions/upload-artifact@v4
+#        with:
+#          retention-days: 1d
+#          name: openapi-coverage-output-${{ matrix.category }}
+#          path: ./FoodApi.Tests/bin/generated_specs/*.json
+
+  run-info:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-
-    env:
-      DOTNET_NOLOGO: true
-      DOTNET_CLI_TELEMETRY_OPTOUT: true
-
-    strategy:
-      matrix:
-        include:
-          - category: menu
-            cmd: --filter TestCategory=Menu
-          - category: cooking
-            cmd: --filter TestCategory=Cooking
-          - category: other
-            cmd: --filter TestCategory=Other
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 9.0.x
-          source-url: ${{ secrets.NUGET_SOURCE }}
-        env:
-          NUGET_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
-
-      - name: Build
-        run: dotnet build --configuration Release
-
-      - name: Test
-        env:
-          ENABLE_SWAGGER_COVERAGE: true
-        run: dotnet test ${{ matrix.cmd }} --configuration Release --no-build
-
-      - name: Upload openapi coverage results
-        uses: actions/upload-artifact@v4
-        with:
-          retention-days: 1d
-          name: openapi-coverage-output-${{ matrix.category }}
-          path: ./FoodApi.Tests/bin/generated_specs/*.json
-        
-  coverage:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: "build"
     
     steps:
       - uses: actions/checkout@v4
-      - name: Download All Artifacts
-        uses: actions/download-artifact@v4
+      - uses: actions/setup-node@v4
         with:
-          path: openapi-coverage-output
-          pattern: openapi-coverage-output-*
-          merge-multiple: true
-  
-      - run: ls -R openapi-coverage-output
-
-      - name: Delete artifacts
-        uses: geekyeggo/delete-artifact@v5
+          node-version: '22.14.0'
+      - uses: actions/github-script@v7
         with:
-          failOnError: false
-          name: openapi-coverage-*
-
-      - run: mv ./openapi-coverage-output/swagger.json ./
-
-      - uses: alekskulakov/ci.actions.swaggercoverage@v1.0.14
-        with:
-          spec-path: 'swagger.json'
-          input-path: 'openapi-coverage-output'
-          quiet: false
+          github-token: '${{ github.token }}'
+          script: |
+            const fs = require('fs');
+            const fileName = 'swagger-coverage-results.json';
+            const json = fs.readFileSync(fileName, "utf8");
+            const fileContent = JSON.parse(json);
+            const {all, full, party, empty} = fileContent.coverageOperationMap.counter;
+            
+            // console.log(summary);
+            let fullPercentage = Math.round((full/all*100 + Number.EPSILON) * 100) / 100;
+            let partialPercentage = Math.round((party/all*100 + Number.EPSILON) * 100) / 100;
+            let emptyPercentage = Math.round((empty/all*100 + Number.EPSILON) * 100) / 100;
+            console.log(fullPercentage);
+            console.log(partialPercentage);
+            console.log(emptyPercentage);
+#            var list = await github.rest.actions.listWorkflowRunsForRepo({
+#                owner: context.repo.owner,
+#                repo: context.repo.repo,
+#                branch: 'use-action',
+#                status: 'success',
+#                per_page: 1,
+#                page: 1
+#            })
+#            var workflowId = list.data.workflow_runs[0].id
+#            console.log(workflowId)
+          
+#  coverage:
+#    runs-on: ubuntu-latest
+#    timeout-minutes: 15
+#    needs: "build"
+#    
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: Download All Artifacts
+#        uses: actions/download-artifact@v4
+#        with:
+#          path: openapi-coverage-output
+#          pattern: openapi-coverage-output-*
+#          merge-multiple: true
+#  
+#      - run: ls -R openapi-coverage-output
+#
+#      - name: Delete artifacts
+#        uses: geekyeggo/delete-artifact@v5
+#        with:
+#          failOnError: false
+#          name: openapi-coverage-*
+#
+#      - run: mv ./openapi-coverage-output/swagger.json ./
+#
+#      - uses: alekskulakov/ci.actions.swaggercoverage@v1.0.14
+#        with:
+#          spec-path: 'swagger.json'
+#          input-path: 'openapi-coverage-output'
+#          quiet: false
