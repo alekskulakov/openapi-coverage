@@ -61,6 +61,7 @@ jobs:
           github-token: '${{ github.token }}'
           script: |
             const fs = require('fs');
+            
             const fileName = 'swagger-coverage-results.json';
             const json = fs.readFileSync(fileName, "utf8");
             const fileContent = JSON.parse(json);
@@ -73,7 +74,10 @@ jobs:
             console.log(fullPercentage);
             console.log(partialPercentage);
             console.log(emptyPercentage);
-            
+            var threshold = 51
+            if(fullPercentage < threshold){
+              core.warning(`The coverage less than ${threshold}`);
+            }
 #            var list = await github.rest.actions.listWorkflowRunsForRepo({
 #                owner: context.repo.owner,
 #                repo: context.repo.repo,
