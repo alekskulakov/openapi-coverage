@@ -50,13 +50,26 @@ jobs:
   coverage-gate:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    
+  
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
-      - uses: actions/github-script@v7
+          
+      - uses: actions/cache/restore@v4
+        id: cache-coverage
+        with: 
+          path: coverage-threshold.txt
+          key: coverage-threshold
+      
+      - name: Get threshold
+        if: steps.cache-coverage.outputs.cache-hit != 'true'
+        run: | 
+          echo 'No cached threshold'
+        
+      - id: calculate-threshold  
+        uses: actions/github-script@v7
         with:
           github-token: '${{ github.token }}'
           script: |
@@ -74,12 +87,32 @@ jobs:
             console.log(fullPercentage);
             console.log(partialPercentage);
             console.log(emptyPercentage);
+            const thresholdFileName = 'coverage-threshold.txt'
+            let c = 0;
+            if (fs.existsSync(thresholdFileName)) {
+              c = fs.readFileSync(thresholdFileName, "utf8");
+              core.info(`From file ${c}`);
+              core.setOutput('existingCoverageKey', c);
+            } else {
+              fs.writeFileSync(thresholdFileName, fullPercentage.toString())
+              core.info(`Write to file new threshold ${c}`);
+              core.setOutput('existingCoverageKey', 0);
+            }
+            
             var threshold = 51;
             if(fullPercentage < threshold){
               core.summary.addRaw(`:speech_balloon: The coverage less than ${threshold}`, true);
               core.summary.write({overwrite: false});
               core.info(`The coverage less than ${threshold}`);
             }
+            
+      - name: cat file  
+        run: echo $(cat coverage-threshold.txt)
+          
+      - uses: actions/cache/restore@v4
+        with:
+          path: coverage-threshold.txt
+          key: coverage-threshold
 #            var list = await github.rest.actions.listWorkflowRunsForRepo({
 #                owner: context.repo.owner,
 #                repo: context.repo.repo,
