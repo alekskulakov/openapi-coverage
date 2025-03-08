@@ -109,7 +109,7 @@ jobs:
       - name: cat file  
         run: echo $(cat coverage-threshold.txt)
           
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/save@v4
         with:
           path: coverage-threshold.txt
           key: coverage-threshold
