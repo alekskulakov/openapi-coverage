@@ -68,9 +68,7 @@ jobs:
           path: ${{ env.Base_Coverage_File }}
           key: coverage-threshold
       
-      - run: |
-          ls .
-          cat ${{ env.Base_Coverage_File }}
+      - run: ls .
 
       - id: calculate-threshold  
         uses: actions/github-script@v7
@@ -118,7 +116,7 @@ jobs:
             
             core.summary.addRaw(isPassed ? successMsg : failMsg, true);
             core.summary.write({overwrite: false});
- 
+      - run: cat ${{ env.Base_Coverage_File }}
 #      - run: |
 #          echo ${{ steps.base-coverage.outputs.value }}
 #          echo ${{ steps.calculate-threshold.outputs.calculatedValue }}
