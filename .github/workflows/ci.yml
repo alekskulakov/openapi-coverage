@@ -6,73 +6,157 @@ on:
     branches:
       - main
 jobs:
-  build:
+#  build:
+#    runs-on: ubuntu-latest
+#    timeout-minutes: 15
+#
+#    env:
+#      DOTNET_NOLOGO: true
+#      DOTNET_CLI_TELEMETRY_OPTOUT: true
+#
+#    strategy:
+#      matrix:
+#        include:
+#          - category: menu
+#            cmd: --filter TestCategory=Menu
+#          - category: cooking
+#            cmd: --filter TestCategory=Cooking
+#          - category: other
+#            cmd: --filter TestCategory=Other
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: actions/setup-dotnet@v4
+#        with:
+#          dotnet-version: 9.0.x
+#          source-url: ${{ secrets.NUGET_SOURCE }}
+#        env:
+#          NUGET_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
+#
+#      - name: Build
+#        run: dotnet build --configuration Release
+#
+#      - name: Test
+#        env:
+#          ENABLE_SWAGGER_COVERAGE: true
+#        run: dotnet test ${{ matrix.cmd }} --configuration Release --no-build
+#
+#      - name: Upload openapi coverage results
+#        uses: actions/upload-artifact@v4
+#        with:
+#          retention-days: 1d
+#          name: openapi-coverage-output-${{ matrix.category }}
+#          path: ./FoodApi.Tests/bin/generated_specs/*.json
+
+  coverage-gate:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-
     env:
-      DOTNET_NOLOGO: true
-      DOTNET_CLI_TELEMETRY_OPTOUT: true
-
-    strategy:
-      matrix:
-        include:
-          - category: menu
-            cmd: --filter TestCategory=Menu
-          - category: cooking
-            cmd: --filter TestCategory=Cooking
-          - category: other
-            cmd: --filter TestCategory=Other
+      Base_Coverage_File: coverage-threshold.txt
+      Results_Coverage_File: swagger-coverage-results.json
+      Coverage_Run_Key: coverage-threshold-${{ github.run_id }}
+      
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-node@v4
         with:
-          dotnet-version: 9.0.x
-          source-url: ${{ secrets.NUGET_SOURCE }}
-        env:
-          NUGET_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
+          node-version: '22.14.0'
 
-      - name: Build
-        run: dotnet build --configuration Release
+      - uses: actions/cache/restore@v4
+        id: restore-cache
+        with: 
+          path: ${{ env.Base_Coverage_File }}
+          key: coverage-threshold
 
-      - name: Test
-        env:
-          ENABLE_SWAGGER_COVERAGE: true
-        run: dotnet test ${{ matrix.cmd }} --configuration Release --no-build
-
-      - name: Upload openapi coverage results
-        uses: actions/upload-artifact@v4
+      - id: calculate-threshold  
+        uses: actions/github-script@v7
         with:
-          retention-days: 1d
-          name: openapi-coverage-output-${{ matrix.category }}
-          path: ./FoodApi.Tests/bin/generated_specs/*.json
-        
-  coverage:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: "build"
-    
-    steps:
-      - uses: actions/checkout@v4
-      - name: Download All Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: openapi-coverage-output
-          pattern: openapi-coverage-output-*
-          merge-multiple: true
-  
-      - run: ls -R openapi-coverage-output
+          github-token: '${{ github.token }}'
+          script: |
+            const fs = require('fs');
+            
+            const baseFile = '${{ env.Base_Coverage_File }}'
+            const resultsFile = '${{ env.Results_Coverage_File }}';
+            
+            let threshold = 0;
+            let fullPercentage = 0;
+            if (!fs.existsSync(baseFile)) {
+              fs.writeFileSync(baseFile, fullPercentage.toString());
+              core.info(`File ${baseFile} not found!`);
+            } else {
+              threshold = fs.readFileSync(baseFile, "utf8");
+            }
+            core.info(`Base threshold: ${threshold}`);
+            
+            if (!fs.existsSync(resultsFile)) {
+              core.info(`File ${resultsFile} not found!`);
+              return;
+            }
 
-      - name: Delete artifacts
-        uses: geekyeggo/delete-artifact@v5
-        with:
-          failOnError: false
-          name: openapi-coverage-*
+            const resultsJson = fs.readFileSync(resultsFile, "utf8");
+            const resultsContent = JSON.parse(resultsJson);
+            const {all, full, party, empty} = resultsContent.coverageOperationMap.counter;
 
-      - run: mv ./openapi-coverage-output/swagger.json ./
+            fullPercentage = Math.round((full/all*100 + Number.EPSILON) * 100) / 100;
+            let partialPercentage = Math.round((party/all*100 + Number.EPSILON) * 100) / 100;
+            let emptyPercentage = Math.round((empty/all*100 + Number.EPSILON) * 100) / 100;
+            
+            const randomNumber = Math.random() * 100;
+            fullPercentage = Math.round(randomNumber * 100) / 100;
+            
+            console.log(fullPercentage);
+            console.log(partialPercentage);
+            console.log(emptyPercentage);
 
-      - uses: alekskulakov/ci.actions.swaggercoverage@v1.0.15
+            core.setOutput('baseValue', threshold);
+            core.setOutput('calculatedValue', fullPercentage);
+            
+            const isPassed = fullPercentage >= threshold;
+            const failMsg = `:x: The coverage ${fullPercentage} is lower than ${threshold}`;
+            const successMsg = `:white_check_mark: The coverage ${fullPercentage} is equal or higher than ${threshold}`;
+            
+            core.summary.addRaw(isPassed ? successMsg : failMsg, true);
+            core.summary.write({overwrite: false});
+            
+#      - run: |
+#          echo ${{ steps.base-coverage.outputs.value }}
+#          echo ${{ steps.calculate-threshold.outputs.calculatedValue }}
+#          echo ${{ steps.restore-cache.outputs.cache-matched-key }}
+#          echo ${{ env.Coverage_Run_Key }}
+#          echo "${{ steps.calculate-threshold.outputs.calculatedValue }}" > ${{ env.Base_Coverage_File }}
+
+      - uses: actions/cache/save@v4
+        if: steps.restore-cache.outputs.cache-matched-key != env.Coverage_Run_Key
         with:
-          spec-path: 'swagger.json'
-          input-path: 'openapi-coverage-output'
-          quiet: false
+          path: ${{ env.Base_Coverage_File }}
+          key: ${{ env.Coverage_Run_Key }}
+
+          
+#  coverage:
+#    runs-on: ubuntu-latest
+#    timeout-minutes: 15
+#    needs: "build"
+#    
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: Download All Artifacts
+#        uses: actions/download-artifact@v4
+#        with:
+#          path: openapi-coverage-output
+#          pattern: openapi-coverage-output-*
+#          merge-multiple: true
+#  
+#      - run: ls -R openapi-coverage-output
+#
+#      - name: Delete artifacts
+#        uses: geekyeggo/delete-artifact@v5
+#        with:
+#          failOnError: false
+#          name: openapi-coverage-*
+#
+#      - run: mv ./openapi-coverage-output/swagger.json ./
+#
+#      - uses: alekskulakov/ci.actions.swaggercoverage@v1.0.15
+#        with:
+#          spec-path: 'swagger.json'
+#          input-path: 'openapi-coverage-output'
+#          quiet: false

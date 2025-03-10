@@ -1,0 +1,445 @@
+{
+  "operations": {
+    "/make/{id}/tasty/{level} POST": {
+      "operationKey": {
+        "path": "/make/{id}/tasty/{level}",
+        "httpMethod": "POST"
+      },
+      "conditions": [{
+        "name": "HTTP status 200",
+        "description": "",
+        "covered": false,
+        "type": "DefaultStatusConditionPredicate",
+        "hasPostCheck": false,
+        "needCheck": true,
+        "reason": ""
+      }, {
+        "name": "path «id» is not empty",
+        "description": "",
+        "covered": false,
+        "type": "DefaultParameterConditionPredicate",
+        "hasPostCheck": false,
+        "needCheck": true,
+        "reason": ""
+      }, {
+        "name": "path «level» is not empty",
+        "description": "",
+        "covered": false,
+        "type": "DefaultParameterConditionPredicate",
+        "hasPostCheck": false,
+        "needCheck": true,
+        "reason": ""
+      }
+      ],
+      "allConditionCount": 3,
+      "coveredConditionCount": 0,
+      "processCount": 0,
+      "description": "",
+      "state": "EMPTY",
+      "deprecated": false
+    },
+    "/meal/remove GET": {
+      "operationKey": {
+        "path": "/meal/remove",
+        "httpMethod": "GET"
+      },
+      "conditions": [{
+        "name": "HTTP status 200",
+        "description": "",
+        "covered": false,
+        "type": "DefaultStatusConditionPredicate",
+        "hasPostCheck": false,
+        "needCheck": true,
+        "reason": ""
+      }
+      ],
+      "allConditionCount": 1,
+      "coveredConditionCount": 0,
+      "processCount": 0,
+      "description": "",
+      "state": "EMPTY",
+      "deprecated": false
+    },
+    "/meal/{id}/cook GET": {
+      "operationKey": {
+        "path": "/meal/{id}/cook",
+        "httpMethod": "GET"
+      },
+      "conditions": [{
+        "name": "HTTP status 200",
+        "description": "",
+        "covered": true,
+        "type": "DefaultStatusConditionPredicate",
+        "hasPostCheck": false,
+        "needCheck": false,
+        "reason": ""
+      }, {
+        "name": "path «id» is not empty",
+        "description": "",
+        "covered": true,
+        "type": "DefaultParameterConditionPredicate",
+        "hasPostCheck": false,
+        "needCheck": false,
+        "reason": ""
+      }
+      ],
+      "allConditionCount": 2,
+      "coveredConditionCount": 2,
+      "processCount": 2,
+      "description": "",
+      "state": "FULL",
+      "deprecated": false
+    },
+    "/menu GET": {
+      "operationKey": {
+        "path": "/menu",
+        "httpMethod": "GET"
+      },
+      "conditions": [{
+        "name": "HTTP status 200",
+        "description": "",
+        "covered": true,
+        "type": "DefaultStatusConditionPredicate",
+        "hasPostCheck": false,
+        "needCheck": false,
+        "reason": ""
+      }
+      ],
+      "allConditionCount": 1,
+      "coveredConditionCount": 1,
+      "processCount": 1,
+      "description": "",
+      "state": "FULL",
+      "deprecated": false
+    }
+  },
+  "flatOperations": {
+    "/make/{id}/tasty/{level} POST": {
+      "operationKey": {
+        "path": "/make/{id}/tasty/{level}",
+        "httpMethod": "POST"
+      },
+      "conditions": [{
+        "name": "HTTP status 200",
+        "description": "",
+        "covered": false,
+        "type": "DefaultStatusConditionPredicate",
+        "hasPostCheck": false,
+        "needCheck": true,
+        "reason": ""
+      }, {
+        "name": "path «id» is not empty",
+        "description": "",
+        "covered": false,
+        "type": "DefaultParameterConditionPredicate",
+        "hasPostCheck": false,
+        "needCheck": true,
+        "reason": ""
+      }, {
+        "name": "path «level» is not empty",
+        "description": "",
+        "covered": false,
+        "type": "DefaultParameterConditionPredicate",
+        "hasPostCheck": false,
+        "needCheck": true,
+        "reason": ""
+      }
+      ],
+      "allConditionCount": 3,
+      "coveredConditionCount": 0,
+      "processCount": 0,
+      "description": "",
+      "state": "EMPTY",
+      "deprecated": false
+    },
+    "/meal/remove GET": {
+      "operationKey": {
+        "path": "/meal/remove",
+        "httpMethod": "GET"
+      },
+      "conditions": [{
+        "name": "HTTP status 200",
+        "description": "",
+        "covered": false,
+        "type": "DefaultStatusConditionPredicate",
+        "hasPostCheck": false,
+        "needCheck": true,
+        "reason": ""
+      }
+      ],
+      "allConditionCount": 1,
+      "coveredConditionCount": 0,
+      "processCount": 0,
+      "description": "",
+      "state": "EMPTY",
+      "deprecated": false
+    },
+    "/meal/{id}/cook GET": {
+      "operationKey": {
+        "path": "/meal/{id}/cook",
+        "httpMethod": "GET"
+      },
+      "conditions": [{
+        "name": "HTTP status 200",
+        "description": "",
+        "covered": true,
+        "type": "DefaultStatusConditionPredicate",
+        "hasPostCheck": false,
+        "needCheck": false,
+        "reason": ""
+      }, {
+        "name": "path «id» is not empty",
+        "description": "",
+        "covered": true,
+        "type": "DefaultParameterConditionPredicate",
+        "hasPostCheck": false,
+        "needCheck": false,
+        "reason": ""
+      }
+      ],
+      "allConditionCount": 2,
+      "coveredConditionCount": 2,
+      "processCount": 2,
+      "description": "",
+      "state": "FULL",
+      "deprecated": false
+    },
+    "/menu GET": {
+      "operationKey": {
+        "path": "/menu",
+        "httpMethod": "GET"
+      },
+      "conditions": [{
+        "name": "HTTP status 200",
+        "description": "",
+        "covered": true,
+        "type": "DefaultStatusConditionPredicate",
+        "hasPostCheck": false,
+        "needCheck": false,
+        "reason": ""
+      }
+      ],
+      "allConditionCount": 1,
+      "coveredConditionCount": 1,
+      "processCount": 1,
+      "description": "",
+      "state": "FULL",
+      "deprecated": false
+    }
+  },
+  "missed": {},
+  "deprecated": {},
+  "conditionStatisticsMap": {
+    "DefaultStatusConditionPredicate": {
+      "allCount": 4,
+      "coveredCount": 2,
+      "uncoveredCount": 2,
+      "coveredOperation": [{
+        "operation": {
+          "path": "/meal/{id}/cook",
+          "httpMethod": "GET"
+        },
+        "condition": {
+          "name": "HTTP status 200",
+          "description": "",
+          "covered": true,
+          "type": "DefaultStatusConditionPredicate",
+          "hasPostCheck": false,
+          "needCheck": false,
+          "reason": ""
+        }
+      }, {
+        "operation": {
+          "path": "/menu",
+          "httpMethod": "GET"
+        },
+        "condition": {
+          "name": "HTTP status 200",
+          "description": "",
+          "covered": true,
+          "type": "DefaultStatusConditionPredicate",
+          "hasPostCheck": false,
+          "needCheck": false,
+          "reason": ""
+        }
+      }
+      ],
+      "uncoveredOperation": [{
+        "operation": {
+          "path": "/make/{id}/tasty/{level}",
+          "httpMethod": "POST"
+        },
+        "condition": {
+          "name": "HTTP status 200",
+          "description": "",
+          "covered": false,
+          "type": "DefaultStatusConditionPredicate",
+          "hasPostCheck": false,
+          "needCheck": true,
+          "reason": ""
+        }
+      }, {
+        "operation": {
+          "path": "/meal/remove",
+          "httpMethod": "GET"
+        },
+        "condition": {
+          "name": "HTTP status 200",
+          "description": "",
+          "covered": false,
+          "type": "DefaultStatusConditionPredicate",
+          "hasPostCheck": false,
+          "needCheck": true,
+          "reason": ""
+        }
+      }
+      ]
+    },
+    "DefaultParameterConditionPredicate": {
+      "allCount": 3,
+      "coveredCount": 1,
+      "uncoveredCount": 2,
+      "coveredOperation": [{
+        "operation": {
+          "path": "/meal/{id}/cook",
+          "httpMethod": "GET"
+        },
+        "condition": {
+          "name": "path «id» is not empty",
+          "description": "",
+          "covered": true,
+          "type": "DefaultParameterConditionPredicate",
+          "hasPostCheck": false,
+          "needCheck": false,
+          "reason": ""
+        }
+      }
+      ],
+      "uncoveredOperation": [{
+        "operation": {
+          "path": "/make/{id}/tasty/{level}",
+          "httpMethod": "POST"
+        },
+        "condition": {
+          "name": "path «id» is not empty",
+          "description": "",
+          "covered": false,
+          "type": "DefaultParameterConditionPredicate",
+          "hasPostCheck": false,
+          "needCheck": true,
+          "reason": ""
+        }
+      }, {
+        "operation": {
+          "path": "/make/{id}/tasty/{level}",
+          "httpMethod": "POST"
+        },
+        "condition": {
+          "name": "path «level» is not empty",
+          "description": "",
+          "covered": false,
+          "type": "DefaultParameterConditionPredicate",
+          "hasPostCheck": false,
+          "needCheck": true,
+          "reason": ""
+        }
+      }
+      ]
+    }
+  },
+  "zeroCall": [{
+    "path": "/meal/remove",
+    "httpMethod": "GET"
+  }, {
+    "path": "/make/{id}/tasty/{level}",
+    "httpMethod": "POST"
+  }
+  ],
+  "generationStatistics": {
+    "resultFileCount": 3,
+    "generationTime": 30,
+    "fileResultDateInterval": "2025-03-06 06:24:01 - 2025-03-06 06:24:01",
+    "generateDate": "2025-03-06 06:24:04"
+  },
+  "coverageOperationMap": {
+    "full": [{
+      "path": "/menu",
+      "httpMethod": "GET"
+    }, {
+      "path": "/meal/{id}/cook",
+      "httpMethod": "GET"
+    }
+    ],
+    "party": [],
+    "empty": [{
+      "path": "/meal/remove",
+      "httpMethod": "GET"
+    }, {
+      "path": "/make/{id}/tasty/{level}",
+      "httpMethod": "POST"
+    }
+    ],
+    "deprecated": [],
+    "counter": {
+      "all": 4,
+      "full": 2,
+      "party": 0,
+      "empty": 2,
+      "deprecated": 0
+    }
+  },
+  "conditionCounter": {
+    "all": 7,
+    "covered": 3,
+    "deprecated": 0,
+    "deprecatedAndEmpty": 0
+  },
+  "tagCoverageMap": {
+    "FoodApi.Web": {
+      "tag": {
+        "name": "FoodApi.Web"
+      },
+      "operations": [{
+        "path": "/meal/remove",
+        "httpMethod": "GET"
+      }, {
+        "path": "/meal/{id}/cook",
+        "httpMethod": "GET"
+      }, {
+        "path": "/menu",
+        "httpMethod": "GET"
+      }, {
+        "path": "/make/{id}/tasty/{level}",
+        "httpMethod": "POST"
+      }
+      ],
+      "coverageCounter": {
+        "all": 4,
+        "full": 2,
+        "party": 0,
+        "empty": 2,
+        "deprecated": 0
+      },
+      "conditionCounter": {
+        "all": 7,
+        "covered": 3,
+        "deprecated": 0,
+        "deprecatedAndEmpty": 0
+      },
+      "callCounts": 3,
+      "state": "PARTY"
+    }
+  },
+  "tagCounter": {
+    "all": 1,
+    "full": 0,
+    "party": 1,
+    "empty": 0,
+    "deprecated": 0
+  },
+  "prettyConfiguration": "{\n  \"rules\" : {\n    \"only-declared-status\" : {\n      \"enable\" : false,\n      \"filter\" : null,\n      \"ignore\" : null\n    },\n    \"not-empty-body\" : {\n      \"enable\" : false,\n      \"filter\" : null,\n      \"ignore\" : null\n    },\n    \"exclude-deprecated\" : {\n      \"enable\" : true,\n      \"filter\" : null,\n      \"ignore\" : null\n    }\n  },\n  \"writers\" : { }\n}",
+  "info": {
+    "title": "FoodApi.Web | v1",
+    "version": "1.0.0"
+  }
+}
