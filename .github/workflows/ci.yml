@@ -175,7 +175,6 @@ jobs:
             } else {
               fs.writeFileSync(thresholdFileName, fullPercentage.toString())
               core.info(`Write to file new threshold ${c}`);
-#              core.setOutput('existingCoverageKey', 0);
             }
             
             var threshold = 51;
