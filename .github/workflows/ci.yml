@@ -70,7 +70,7 @@ jobs:
           path: ${{ env.Coverage_File_Name }}
           key: coverage-threshold
 
-      - name: Check if file exists
+      - name: Get base coverage value
         id: base-coverage
         run: |
           if [ ! -f ${{ env.Coverage_File_Name }} ]; then
