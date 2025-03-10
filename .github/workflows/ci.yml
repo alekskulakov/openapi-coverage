@@ -67,7 +67,13 @@ jobs:
         with: 
           path: coverage-threshold.txt
           key: coverage-threshold
-      
+
+      - if: steps.restore-cache.outputs.cache-hit != 'true'
+        run: echo "0" > coverage-threshold.txt
+        
+      - id: base-coverage
+        run: |
+          echo "value=(cat coverage-threshold.txt)" >> $GITHUB_OUTPUT
 #      - name: Get threshold
 #        if: steps.restore-cache.outputs.cache-hit != 'true'
 #        run: | 
@@ -158,7 +164,7 @@ jobs:
             let c = 0;
             if (fs.existsSync(thresholdFileName)) {
               c = fs.readFileSync(thresholdFileName, "utf8");
-              core.info(`From file ${c}`);
+              core.info(`From file ${c}%`);
               core.setOutput('existingCoverageKey', c);
             } else {
               fs.writeFileSync(thresholdFileName, fullPercentage.toString())
@@ -178,6 +184,7 @@ jobs:
       - name: cat file  
         run: echo $(cat coverage-threshold.txt)
       - run: |
+          echo ${{ steps.base-coverage.outputs.value }}
           echo ${{ steps.restore-cache.outputs.cache-matched-key }}
           echo ${{ steps.cache-key.outputs.key }}
 #
