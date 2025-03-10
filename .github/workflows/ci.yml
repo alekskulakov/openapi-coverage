@@ -109,6 +109,11 @@ jobs:
             }
             console.log(context.workflow);
             const branch = 'try-scripts';
+            
+            const rateLimit = await github.rest.rateLimit.get();
+            console.log('Rate limit:');
+            console.log(rateLimit);
+            
             var list = await github.rest.actions.listWorkflowRuns({
                             owner: context.repo.owner,
                             repo: context.repo.repo,
