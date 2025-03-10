@@ -69,7 +69,7 @@ jobs:
           key: coverage-threshold
       
       - run: |
-          echo ls .
+          ls .
           cat ${{ env.Base_Coverage_File }}
 
       - id: calculate-threshold  
@@ -106,7 +106,7 @@ jobs:
             
             const randomNumber = Math.random() * 100;
             fullPercentage = Math.round(randomNumber * 100) / 100;
-
+            console.log(${{ env.Is_Default_Branch }});
             if(${{ env.Is_Default_Branch }}) {
               core.info(`Write to ${baseFile} new threshold: ${fullPercentage}`);
               fs.writeFileSync(baseFile, threshold.toString());
