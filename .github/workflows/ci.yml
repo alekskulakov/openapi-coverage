@@ -108,6 +108,7 @@ jobs:
             fullPercentage = Math.round(randomNumber * 100) / 100;
 
             if(${{ env.Is_Default_Branch }}) {
+              core.info(`Write to ${baseFile} new threshold: ${fullPercentage}`);
               fs.writeFileSync(baseFile, threshold.toString());
             }
             
@@ -117,8 +118,7 @@ jobs:
             
             core.summary.addRaw(isPassed ? successMsg : failMsg, true);
             core.summary.write({overwrite: false});
-
-            
+ 
 #      - run: |
 #          echo ${{ steps.base-coverage.outputs.value }}
 #          echo ${{ steps.calculate-threshold.outputs.calculatedValue }}
