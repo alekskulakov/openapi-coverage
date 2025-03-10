@@ -67,8 +67,6 @@ jobs:
         with: 
           path: ${{ env.Base_Coverage_File }}
           key: coverage-threshold
-      
-      - run: ls .
 
       - id: calculate-threshold  
         uses: actions/github-script@v7
@@ -104,7 +102,7 @@ jobs:
             
             const randomNumber = Math.random() * 100;
             fullPercentage = Math.round(randomNumber * 100) / 100;
-            console.log(${{ env.Is_Default_Branch }});
+
             if(${{ env.Is_Default_Branch }}) {
               core.info(`Write to ${baseFile} new threshold: ${fullPercentage}`);
               fs.writeFileSync(baseFile, fullPercentage.toString());
@@ -116,13 +114,6 @@ jobs:
             
             core.summary.addRaw(isPassed ? successMsg : failMsg, true);
             core.summary.write({overwrite: false});
-      - run: cat ${{ env.Base_Coverage_File }}
-#      - run: |
-#          echo ${{ steps.base-coverage.outputs.value }}
-#          echo ${{ steps.calculate-threshold.outputs.calculatedValue }}
-#          echo ${{ steps.restore-cache.outputs.cache-matched-key }}
-#          echo ${{ env.Coverage_Run_Key }}
-#          echo "${{ steps.calculate-threshold.outputs.calculatedValue }}" > ${{ env.Base_Coverage_File }}
 
       - uses: actions/cache/save@v4
         if: ${{ env.Is_Default_Branch == 'true' 
@@ -131,7 +122,6 @@ jobs:
           path: ${{ env.Base_Coverage_File }}
           key: ${{ env.Coverage_Run_Key }}
 
-          
 #  coverage:
 #    runs-on: ubuntu-latest
 #    timeout-minutes: 15
