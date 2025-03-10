@@ -56,12 +56,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
-#          
-#      - uses: actions/cache/restore@v4
-#        id: restore-cache
-#        with: 
-#          path: coverage-threshold.txt
-#          key: coverage-threshold
+
+      - uses: actions/cache/restore@v4
+        id: restore-cache
+        with: 
+          path: coverage-threshold.txt
+          key: coverage-threshold-${{ github.run_id }}
       
 #      - name: Get threshold
 #        if: steps.restore-cache.outputs.cache-hit != 'true'
