@@ -68,7 +68,8 @@ jobs:
 #        run: | 
 #          echo 'No cached threshold'
       
-      - id: download artifact
+      - name: Download artifact
+        id: download-artifact
         uses: actions/github-script@v7
         with:
           github-token: '${{ github.token }}'
