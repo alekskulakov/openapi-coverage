@@ -56,12 +56,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
-          
-      - uses: actions/cache/restore@v4
-        id: restore-cache
-        with: 
-          path: coverage-threshold.txt
-          key: coverage-threshold
+#          
+#      - uses: actions/cache/restore@v4
+#        id: restore-cache
+#        with: 
+#          path: coverage-threshold.txt
+#          key: coverage-threshold
       
       - name: Get threshold
         if: steps.restore-cache.outputs.cache-hit != 'true'
@@ -107,26 +107,44 @@ jobs:
               core.summary.write({overwrite: false});
               core.info(`The coverage less than ${threshold}`);
             }
-            function readFile(){
-            }
+            console.log(context.workflow);
+            const branch = 'try-scripts';
+            var list = await github.rest.actions.listWorkflowRuns({
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                            workflow_id: context.workflow,
+                            branch: branch,
+                            status: 'success',
+                            per_page: 1,
+                            page: 1
+                        })
             
+            if(list.data.workflow_runs.length <=0) {
+              return;
+            }
+            var runId = list.data.workflow_runs[0].id
+            console.log('runId: ' + runId)
+            
+            var artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                            run_id: runId
+                        });
+            console.log('Artifacts count: ', artifacts.data.artifacts.length);
       - name: cat file  
         run: echo $(cat coverage-threshold.txt)
-          
-      - uses: actions/cache/save@v4
+
+      - name: Upload coverage file as artifact
+        uses: actions/upload-artifact@v4
         with:
+          name: coverage-threshold
           path: coverage-threshold.txt
-          key: ${{ steps.restore-cache.outputs.cache-primary-key }}
-#            var list = await github.rest.actions.listWorkflowRunsForRepo({
-#                owner: context.repo.owner,
-#                repo: context.repo.repo,
-#                branch: 'use-action',
-#                status: 'success',
-#                per_page: 1,
-#                page: 1
-#            })
-#            var workflowId = list.data.workflow_runs[0].id
-#            console.log(workflowId)
+          
+#      - uses: actions/cache/save@v4
+#        with:
+#          path: coverage-threshold.txt
+#          key: ${{ steps.restore-cache.outputs.cache-primary-key }}
+
           
 #  coverage:
 #    runs-on: ubuntu-latest
