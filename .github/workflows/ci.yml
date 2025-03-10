@@ -177,6 +177,9 @@ jobs:
 
       - name: cat file  
         run: echo $(cat coverage-threshold.txt)
+      - run: |
+          echo ${{ steps.restore-cache.outputs.cache-primary-key }}
+          echo ${{ steps.cache-key.outputs.key }}
 #
 #      - name: Upload coverage file as artifact
 #        uses: actions/upload-artifact@v4
