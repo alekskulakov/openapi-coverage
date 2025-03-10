@@ -73,7 +73,7 @@ jobs:
         
       - id: base-coverage
         run: |
-          echo "value=(cat coverage-threshold.txt)" >> $GITHUB_OUTPUT
+          echo "value=$(cat coverage-threshold.txt)" >> $GITHUB_OUTPUT
 #      - name: Get threshold
 #        if: steps.restore-cache.outputs.cache-hit != 'true'
 #        run: | 
