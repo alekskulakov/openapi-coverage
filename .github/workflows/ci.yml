@@ -54,12 +54,17 @@ jobs:
       Base_Coverage_File: coverage-threshold.txt
       Results_Coverage_File: swagger-coverage-results.json
       Coverage_Run_Key: coverage-threshold-${{ github.run_id }}
+      Is_Default_Branch: ${{ github.ref_name != github.event.repository.default_branch }}
       
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
+      - run: |
+          echo ${{ github.ref_name }}
+          echo ${{ github.event.repository.default_branch }}
+          echo ${{ env.Is_Default_Branch }}
 
       - uses: actions/cache/restore@v4
         id: restore-cache
@@ -80,7 +85,6 @@ jobs:
             let threshold = 0;
             let fullPercentage = 0;
             if (!fs.existsSync(baseFile)) {
-              fs.writeFileSync(baseFile, fullPercentage.toString());
               core.info(`File ${baseFile} not found!`);
             } else {
               threshold = fs.readFileSync(baseFile, "utf8");
@@ -102,13 +106,10 @@ jobs:
             
             const randomNumber = Math.random() * 100;
             fullPercentage = Math.round(randomNumber * 100) / 100;
-            
-            console.log(fullPercentage);
-            console.log(partialPercentage);
-            console.log(emptyPercentage);
 
-            core.setOutput('baseValue', threshold);
-            core.setOutput('calculatedValue', fullPercentage);
+            if(${{ env.Is_Default_Branch }}) {
+              fs.writeFileSync(baseFile, threshold.toString());
+            }
             
             const isPassed = fullPercentage >= threshold;
             const failMsg = `:x: The coverage ${fullPercentage} is lower than ${threshold}`;
@@ -116,6 +117,7 @@ jobs:
             
             core.summary.addRaw(isPassed ? successMsg : failMsg, true);
             core.summary.write({overwrite: false});
+
             
 #      - run: |
 #          echo ${{ steps.base-coverage.outputs.value }}
@@ -124,8 +126,11 @@ jobs:
 #          echo ${{ env.Coverage_Run_Key }}
 #          echo "${{ steps.calculate-threshold.outputs.calculatedValue }}" > ${{ env.Base_Coverage_File }}
 
+      - name: Update base threshold
+        run: echo "${{ steps.calculate-threshold.outputs.calculatedValue }}" > ${{ env.Base_Coverage_File }}
       - uses: actions/cache/save@v4
-        if: steps.restore-cache.outputs.cache-matched-key != env.Coverage_Run_Key
+        if: ${{ env.Is_Default_Branch == 'true' 
+          && steps.restore-cache.outputs.cache-matched-key != env.Coverage_Run_Key }}
         with:
           path: ${{ env.Base_Coverage_File }}
           key: ${{ env.Coverage_Run_Key }}
