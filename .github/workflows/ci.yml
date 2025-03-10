@@ -84,6 +84,8 @@ jobs:
             let fullPercentage = Math.round((full/all*100 + Number.EPSILON) * 100) / 100;
             let partialPercentage = Math.round((party/all*100 + Number.EPSILON) * 100) / 100;
             let emptyPercentage = Math.round((empty/all*100 + Number.EPSILON) * 100) / 100;
+            const randomNumber = Math.random() * 100
+            fullPercentage = Math.round(randomNumber * 100) / 100;
             console.log(fullPercentage);
             console.log(partialPercentage);
             console.log(emptyPercentage);
@@ -104,6 +106,8 @@ jobs:
               core.summary.addRaw(`:speech_balloon: The coverage less than ${threshold}`, true);
               core.summary.write({overwrite: false});
               core.info(`The coverage less than ${threshold}`);
+            }
+            function readFile(){
             }
             
       - name: cat file  
