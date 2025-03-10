@@ -182,7 +182,7 @@ jobs:
       - uses: actions/cache/save@v4
         with:
           path: coverage-threshold.txt
-          key: ${{ steps.restore-cache.outputs.cache-primary-key }}
+          key: coverage-threshold-${{ github.run_id }}
 
           
 #  coverage:
