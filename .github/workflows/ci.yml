@@ -52,17 +52,18 @@ jobs:
     timeout-minutes: 15
     env:
       Coverage_File_Name: coverage-threshold.txt
+      Coverage_Run_Key: coverage-threshold-${{ github.run_id }}
       
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
-
-      - name: Build coverage cache key
-        id: cache-key
-        run: |
-          echo "key=coverage-threshold-${{ github.run_id }}" >> $GITHUB_OUTPUT
+#
+#      - name: Build coverage cache key
+#        id: cache-key
+#        run: |
+#          echo "key=coverage-${{ github.run_id }}" >> $GITHUB_OUTPUT
 
       - uses: actions/cache/restore@v4
         id: restore-cache
@@ -169,7 +170,7 @@ jobs:
             let c = 0;
             if (fs.existsSync(thresholdFileName)) {
               c = fs.readFileSync(thresholdFileName, "utf8");
-              core.info(`From file ${c}%`);
+              core.info(`From file ${c}`);
               core.setOutput('existingCoverageKey', c);
             } else {
               fs.writeFileSync(thresholdFileName, fullPercentage.toString())
@@ -187,7 +188,7 @@ jobs:
       - run: |
           echo ${{ steps.base-coverage.outputs.value }}
           echo ${{ steps.restore-cache.outputs.cache-matched-key }}
-          echo ${{ steps.cache-key.outputs.key }}
+          echo ${{ env.Coverage_Run_Key }}
 #
 #      - name: Upload coverage file as artifact
 #        uses: actions/upload-artifact@v4
@@ -196,10 +197,10 @@ jobs:
 #          path: coverage-threshold.txt
           
       - uses: actions/cache/save@v4
-        if: steps.restore-cache.outputs.cache-matched-key != steps.cache-key.outputs.key
+        if: steps.restore-cache.outputs.cache-matched-key != env.Coverage_Run_Key
         with:
           path: ${{ env.Coverage_File_Name }}
-          key: ${{ steps.cache-key.outputs.key }}
+          key: ${{ env.Coverage_Run_Key }}
 
           
 #  coverage:
