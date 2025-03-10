@@ -51,7 +51,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      Coverage_File_Name: coverage-threshold.txt
+      Base_Coverage_File: coverage-threshold.txt
+      Results_Coverage_File: swagger-coverage-results.json
       Coverage_Run_Key: coverage-threshold-${{ github.run_id }}
       
     steps:
@@ -59,149 +60,82 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
-#
-#      - name: Build coverage cache key
-#        id: cache-key
-#        run: |
-#          echo "key=coverage-${{ github.run_id }}" >> $GITHUB_OUTPUT
 
       - uses: actions/cache/restore@v4
         id: restore-cache
         with: 
-          path: ${{ env.Coverage_File_Name }}
+          path: ${{ env.Base_Coverage_File }}
           key: coverage-threshold
 
       - name: Get base coverage value
         id: base-coverage
         run: |
-          if [ ! -f ${{ env.Coverage_File_Name }} ]; then
-            echo "File not found!"
-            echo "0" > ${{ env.Coverage_File_Name }}
+          if [ ! -f ${{ env.Base_Coverage_File }} ]; then
+            echo "File ${{ env.Base_Coverage_File }} not found!"
+            echo "0" > ${{ env.Base_Coverage_File }}
           fi
-          echo "value=$(cat ${{ env.Coverage_File_Name }})" >> $GITHUB_OUTPUT
-          
-#      - name: Get threshold
-#        if: steps.restore-cache.outputs.cache-hit != 'true'
-#        run: | 
-#          echo 'No cached threshold'
-#      
-#      - name: Download artifact
-#        id: download-artifact
-#        uses: actions/github-script@v7
-#        with:
-#          github-token: '${{ github.token }}'
-#          script: |
-#            const branch = 'try-scripts';
-#
-#            const rateLimit = await github.rest.rateLimit.get();
-#            console.log('Rate limit:');
-#            console.log(rateLimit.data);
-#
-#            var list = await github.rest.actions.listWorkflowRuns({
-#                owner: context.repo.owner,
-#                repo: context.repo.repo,
-#                workflow_id: context.workflow,
-#                branch: branch,
-#                status: 'success',
-#                per_page: 1,
-#                page: 1
-#            })
-#
-#            if(list.data.workflow_runs.length <=0) {
-#              return;
-#            }
-#            var runId = list.data.workflow_runs[0].id
-#
-#            var artifacts = await github.rest.actions.listWorkflowRunArtifacts({
-#                owner: context.repo.owner,
-#                repo: context.repo.repo,
-#                run_id: runId
-#            });
-#            console.log('Artifacts count: ', artifacts.data.artifacts.length);
-#
-#            const artifact = artifacts.data.artifacts.find(({ name }) => name === "coverage-threshold");
-#
-#            if(!artifact) {
-#              console.log('No artifacts found');
-#              return;
-#            }
-#
-#            try {
-#              zip = await github.rest.actions.downloadArtifact({
-#                owner: context.repo.owner,
-#                repo: context.repo.repo,
-#                artifact_id: artifact.id,
-#                archive_format: "zip",
-#              })
-#            } catch (error) {
-#              if (error.message.startsWith("Artifact has expired")) {
-#                return core.info(message) 
-#              } else {
-#                throw new Error(error.message)
-#              }
-#            }
-#      - name: ls
-#        shell: bash
-#        run: ls .
+          echo "value=$(cat ${{ env.Base_Coverage_File }})" >> $GITHUB_OUTPUT
 
       - id: calculate-threshold  
         uses: actions/github-script@v7
         with:
           github-token: '${{ github.token }}'
           script: |
-
             const fs = require('fs');
             
-            const fileName = 'swagger-coverage-results.json';
-            const json = fs.readFileSync(fileName, "utf8");
-            const fileContent = JSON.parse(json);
-            const {all, full, party, empty} = fileContent.coverageOperationMap.counter;
+            const baseFile = '${{ env.Base_Coverage_File }}'
+            const resultsFile = '${{ env.Results_Coverage_File }}';
             
-            // console.log(summary);
+            let threshold = 0;
+            if (!fs.existsSync(baseFile)) {
+              fs.writeFileSync(baseFile, fullPercentage.toString())
+              core.info(`File ${baseFile} not found!`);
+            } else {
+              threshold = fs.readFileSync(baseFile, "utf8");
+            }
+            core.info(`Base threshold is ${threshold}`);
+            
+            if (!fs.existsSync(resultsFile)) {
+              core.info(`File ${resultsFile} not found!`);
+              return;
+            }
+
+            const resultsJson = fs.readFileSync(resultsFile, "utf8");
+            const resultsContent = JSON.parse(resultsJson);
+            const {all, full, party, empty} = resultsContent.coverageOperationMap.counter;
+
             let fullPercentage = Math.round((full/all*100 + Number.EPSILON) * 100) / 100;
             let partialPercentage = Math.round((party/all*100 + Number.EPSILON) * 100) / 100;
             let emptyPercentage = Math.round((empty/all*100 + Number.EPSILON) * 100) / 100;
+            
             const randomNumber = Math.random() * 100
             fullPercentage = Math.round(randomNumber * 100) / 100;
+            
             console.log(fullPercentage);
             console.log(partialPercentage);
             console.log(emptyPercentage);
-            const thresholdFileName = '${{ env.Coverage_File_Name }}'
-            let c = 0;
-            if (fs.existsSync(thresholdFileName)) {
-              c = fs.readFileSync(thresholdFileName, "utf8");
-              core.info(`From file ${c}`);
-              core.setOutput('existingCoverageKey', c);
-            } else {
-              fs.writeFileSync(thresholdFileName, fullPercentage.toString())
-              core.info(`Write to file new threshold ${c}`);
-            }
-            
-            var threshold = 51;
-            core.setOutput('calculatedValue', fullPercentage);
-            if(fullPercentage < threshold){
-              core.summary.addRaw(`:speech_balloon: The coverage less than ${threshold}`, true);
-              core.summary.write({overwrite: false});
-              core.info(`The coverage less than ${threshold}`);
-            }
 
+            core.setOutput('baseValue', threshold);
+            core.setOutput('calculatedValue', fullPercentage);
+
+            if(fullPercentage < threshold){
+              core.summary.addRaw(`:speech_balloon: The coverage ${fullPercentage} is lower than ${threshold}`, true);
+              core.info(`The coverage less than ${threshold}`);
+            } else {
+              core.summary.addRaw(`:speech_balloon: The coverage ${fullPercentage} is higher than ${threshold}`, true);
+            }
+            core.summary.write({overwrite: false});
       - run: |
           echo ${{ steps.base-coverage.outputs.value }}
           echo ${{ steps.calculate-threshold.outputs.calculatedValue }}
           echo ${{ steps.restore-cache.outputs.cache-matched-key }}
           echo ${{ env.Coverage_Run_Key }}
-          echo "${{ steps.calculate-threshold.outputs.calculatedValue }}" > ${{ env.Coverage_File_Name }}
-#
-#      - name: Upload coverage file as artifact
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: coverage-threshold
-#          path: coverage-threshold.txt
-          
+          echo "${{ steps.calculate-threshold.outputs.calculatedValue }}" > ${{ env.Base_Coverage_File }}
+
       - uses: actions/cache/save@v4
         if: steps.restore-cache.outputs.cache-matched-key != env.Coverage_Run_Key
         with:
-          path: ${{ env.Coverage_File_Name }}
+          path: ${{ env.Base_Coverage_File }}
           key: ${{ env.Coverage_Run_Key }}
 
           
