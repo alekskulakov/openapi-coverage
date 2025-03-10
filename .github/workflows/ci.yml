@@ -67,7 +67,9 @@ jobs:
         with: 
           path: coverage-threshold.txt
           key: coverage-threshold
-
+      
+      - run: echo ${{ steps.restore-cache.outputs.cache-hit }} > coverage-threshold.txt
+      
       - if: steps.restore-cache.outputs.cache-hit != 'true'
         run: echo "0" > coverage-threshold.txt
         
