@@ -58,13 +58,13 @@ jobs:
           node-version: '22.14.0'
           
       - uses: actions/cache/restore@v4
-        id: cache-coverage
+        id: restore-cache
         with: 
           path: coverage-threshold.txt
           key: coverage-threshold
       
       - name: Get threshold
-        if: steps.cache-coverage.outputs.cache-hit != 'true'
+        if: steps.restore-cache.outputs.cache-hit != 'true'
         run: | 
           echo 'No cached threshold'
         
@@ -116,7 +116,7 @@ jobs:
       - uses: actions/cache/save@v4
         with:
           path: coverage-threshold.txt
-          key: coverage-threshold
+          key: ${{ steps.restore-cache.outputs.cache-primary-key }}
 #            var list = await github.rest.actions.listWorkflowRunsForRepo({
 #                owner: context.repo.owner,
 #                repo: context.repo.repo,
