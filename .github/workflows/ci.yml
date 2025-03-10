@@ -58,9 +58,9 @@ jobs:
           node-version: '22.14.0'
 
       - name: Build coverage cache key
-        id: build-coverage-cache-key
+        id: cache-key
         run: |
-          echo "coverage-cache-key=coverage-threshold-${{ github.run_id }}\n" >> $GITHUB_OUTPUT
+          echo "key=coverage-threshold-${{ github.run_id }}" >> $GITHUB_OUTPUT
 
       - uses: actions/cache/restore@v4
         id: restore-cache
@@ -185,9 +185,10 @@ jobs:
 #          path: coverage-threshold.txt
           
       - uses: actions/cache/save@v4
+        if: steps.restore-cache.outputs.cache-primary-key != steps.cache-key.outputs.key
         with:
           path: coverage-threshold.txt
-          key: ${{ steps.build-coverage-cache-key.outputs.coverage-cache-key }}
+          key: ${{ steps.cache-key.outputs.key }}
 
           
 #  coverage:
