@@ -178,7 +178,7 @@ jobs:
       - name: cat file  
         run: echo $(cat coverage-threshold.txt)
       - run: |
-          echo ${{ steps.restore-cache.outputs.cache-primary-key }}
+          echo ${{ steps.restore-cache.outputs.cache-matched-key }}
           echo ${{ steps.cache-key.outputs.key }}
 #
 #      - name: Upload coverage file as artifact
@@ -188,7 +188,7 @@ jobs:
 #          path: coverage-threshold.txt
           
       - uses: actions/cache/save@v4
-        if: steps.restore-cache.outputs.cache-primary-key != steps.cache-key.outputs.key
+        if: steps.restore-cache.outputs.cache-matched-key != steps.cache-key.outputs.key
         with:
           path: coverage-threshold.txt
           key: ${{ steps.cache-key.outputs.key }}
