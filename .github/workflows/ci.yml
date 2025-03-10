@@ -107,7 +107,7 @@ jobs:
             console.log(${{ env.Is_Default_Branch }});
             if(${{ env.Is_Default_Branch }}) {
               core.info(`Write to ${baseFile} new threshold: ${fullPercentage}`);
-              fs.writeFileSync(baseFile, threshold.toString());
+              fs.writeFileSync(baseFile, fullPercentage.toString());
             }
             
             const isPassed = fullPercentage >= threshold;
