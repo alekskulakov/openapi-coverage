@@ -137,12 +137,13 @@ jobs:
                         });
             console.log('Artifacts count: ', artifacts.data.artifacts.length);
             console.log(artifacts.data.artifacts);
-            const result = artifacts.data.artifacts.find(({ name }) => name === "coverage-thresh1old");
+            const result = artifacts.data.artifacts.find(({ name }) => name === "coverage-threshold");
             if(!result) {
               console.log('No artifacts found');
             } else {
               console.log('Found artifact:', result);
             }
+          
 
       - name: cat file  
         run: echo $(cat coverage-threshold.txt)
