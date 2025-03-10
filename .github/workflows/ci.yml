@@ -175,10 +175,11 @@ jobs:
             } else {
               fs.writeFileSync(thresholdFileName, fullPercentage.toString())
               core.info(`Write to file new threshold ${c}`);
-              core.setOutput('existingCoverageKey', 0);
+#              core.setOutput('existingCoverageKey', 0);
             }
             
             var threshold = 51;
+            core.setOutput('calculatedValue', fullPercentage);
             if(fullPercentage < threshold){
               core.summary.addRaw(`:speech_balloon: The coverage less than ${threshold}`, true);
               core.summary.write({overwrite: false});
@@ -187,6 +188,7 @@ jobs:
 
       - run: |
           echo ${{ steps.base-coverage.outputs.value }}
+          echo ${{ steps.calculate-threshold.outputs.calculatedValue }}
           echo ${{ steps.restore-cache.outputs.cache-matched-key }}
           echo ${{ env.Coverage_Run_Key }}
 #
