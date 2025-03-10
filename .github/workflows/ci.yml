@@ -190,6 +190,7 @@ jobs:
           echo ${{ steps.calculate-threshold.outputs.calculatedValue }}
           echo ${{ steps.restore-cache.outputs.cache-matched-key }}
           echo ${{ env.Coverage_Run_Key }}
+          echo "${{ steps.calculate-threshold.outputs.calculatedValue }}" > ${{ env.Coverage_File_Name }}
 #
 #      - name: Upload coverage file as artifact
 #        uses: actions/upload-artifact@v4
