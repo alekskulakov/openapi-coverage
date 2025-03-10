@@ -67,15 +67,6 @@ jobs:
           path: ${{ env.Base_Coverage_File }}
           key: coverage-threshold
 
-#      - name: Get base coverage value
-#        id: base-coverage
-#        run: |
-#          if [ ! -f ${{ env.Base_Coverage_File }} ]; then
-#            echo "File ${{ env.Base_Coverage_File }} not found!"
-#            echo "0" > ${{ env.Base_Coverage_File }}
-#          fi
-#          echo "value=$(cat ${{ env.Base_Coverage_File }})" >> $GITHUB_OUTPUT
-
       - id: calculate-threshold  
         uses: actions/github-script@v7
         with:
@@ -94,7 +85,7 @@ jobs:
             } else {
               threshold = fs.readFileSync(baseFile, "utf8");
             }
-            core.info(`Base threshold is ${threshold}`);
+            core.info(`Base threshold: ${threshold}`);
             
             if (!fs.existsSync(resultsFile)) {
               core.info(`File ${resultsFile} not found!`);
@@ -118,14 +109,14 @@ jobs:
 
             core.setOutput('baseValue', threshold);
             core.setOutput('calculatedValue', fullPercentage);
-
-            if(fullPercentage < threshold){
-              core.summary.addRaw(`:x: The coverage ${fullPercentage} is lower than ${threshold}`, true);
-              core.info(`The coverage less than ${threshold}`);
-            } else {
-              core.summary.addRaw(`:white_check_mark: The coverage ${fullPercentage} is equal or higher than ${threshold}`, true);
-            }
+            
+            const isPassed = fullPercentage < threshold;
+            const failMsg = `:x: The coverage ${fullPercentage} is lower than ${threshold}`;
+            const successMsg = `:white_check_mark: The coverage ${fullPercentage} is equal or higher than ${threshold}`;
+            
+            core.summary.addRaw(isPassed ? successMsg : failMsg, true);
             core.summary.write({overwrite: false});
+            
 #      - run: |
 #          echo ${{ steps.base-coverage.outputs.value }}
 #          echo ${{ steps.calculate-threshold.outputs.calculatedValue }}
