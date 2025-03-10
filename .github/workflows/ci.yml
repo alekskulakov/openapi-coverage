@@ -110,7 +110,7 @@ jobs:
             core.setOutput('baseValue', threshold);
             core.setOutput('calculatedValue', fullPercentage);
             
-            const isPassed = fullPercentage < threshold;
+            const isPassed = fullPercentage >= threshold;
             const failMsg = `:x: The coverage ${fullPercentage} is lower than ${threshold}`;
             const successMsg = `:white_check_mark: The coverage ${fullPercentage} is equal or higher than ${threshold}`;
             
