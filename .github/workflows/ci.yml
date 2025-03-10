@@ -61,7 +61,7 @@ jobs:
         id: restore-cache
         with: 
           path: coverage-threshold.txt
-          key: coverage-threshold-${{ github.run_id }}
+          key: coverage-threshold
       
 #      - name: Get threshold
 #        if: steps.restore-cache.outputs.cache-hit != 'true'
