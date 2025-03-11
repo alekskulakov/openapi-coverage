@@ -69,7 +69,7 @@ jobs:
       - run: mv ./openapi-coverage-output/swagger.json ./
         continue-on-error: true
 
-      - uses: alekskulakov/ci.actions.swaggercoverage@f9ca0c3bf0cc3d364c32f2e0454582c0005ee9f1
+      - uses: alekskulakov/ci.actions.swaggercoverage@v1.0.16
         with:
           spec-path: 'swagger.json'
           input-path: 'openapi-coverage-output'
