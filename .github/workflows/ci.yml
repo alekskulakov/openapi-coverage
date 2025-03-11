@@ -146,8 +146,8 @@ jobs:
 
       - run: mv ./openapi-coverage-output/swagger.json ./
 
-      - uses: alekskulakov/ci.actions.swaggercoverage@f2bd7a075ad1be38cbb65a8ef370d286e376cba9
+      - uses: alekskulakov/ci.actions.swaggercoverage@e5e6bc366d4b260930155f2d50ac1619a590786d
         with:
           spec-path: 'swagger.json'
           input-path: 'openapi-coverage-output'
-          quiet: false
+          quiet: true
