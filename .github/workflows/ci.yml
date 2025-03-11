@@ -60,8 +60,6 @@ jobs:
           pattern: openapi-coverage-output-*
           merge-multiple: true
 
-      - run: ls -R openapi-coverage-output
-
       - name: Delete artifacts
         uses: geekyeggo/delete-artifact@v5
         with:
