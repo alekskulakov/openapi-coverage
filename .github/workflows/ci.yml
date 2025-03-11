@@ -71,16 +71,9 @@ jobs:
 
       - run: mv ./openapi-coverage-output/swagger.json ./
 
-      - uses: alekskulakov/ci.actions.swaggercoverage/.github/workflows/coverage.yml@e24b6151d15674dbc3bf362edb79a62bb4ab0680
+      - uses: alekskulakov/ci.actions.swaggercoverage@a19ad9310be7aa098cbd5532be75af64741e7afb
         with:
           spec-path: 'swagger.json'
           input-path: 'openapi-coverage-output'
           quiet: true
           throw-on-fail: ${{ vars.COVERAGE_THROW_ON_FAIL }}
-          
-#      - uses: alekskulakov/ci.actions.swaggercoverage@a19ad9310be7aa098cbd5532be75af64741e7afb
-#        with:
-#          spec-path: 'swagger.json'
-#          input-path: 'openapi-coverage-output'
-#          quiet: true
-#          throw-on-fail: ${{ vars.COVERAGE_THROW_ON_FAIL }}
