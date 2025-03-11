@@ -67,6 +67,7 @@ jobs:
           name: openapi-coverage-*
 
       - run: mv ./openapi-coverage-output/swagger.json ./
+        continue-on-error: true
 
       - uses: alekskulakov/ci.actions.swaggercoverage@00f009500fb6dd4933481a4599ae132c38c2d6ed
         with:
