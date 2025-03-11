@@ -76,4 +76,4 @@ jobs:
           spec-path: 'swagger.json'
           input-path: 'openapi-coverage-output'
           quiet: true
-          throw-on-fail: ${{ env.COVERAGE_THROW_ON_FAIL }}
+          throw-on-fail: ${{ vars.COVERAGE_THROW_ON_FAIL }}
