@@ -28,4 +28,17 @@ public class MenuTests
         Debug.Assert(response.Content.Headers.ContentType != null);
         Assert.That(response.Content.Headers.ContentType.ToString(), Is.EqualTo("application/json; charset=utf-8"));
     }
+    
+    [Test]
+    public async Task Get_RemoveMealReturnSuccess()
+    {
+        // Arrange
+        var client = _factory.CreateHttpClient();
+
+        // Act
+        var response = await client.GetAsync("/meal/remove");
+
+        // Assert
+        response.EnsureSuccessStatusCode(); // Status Code 200-299
+    }
 }
