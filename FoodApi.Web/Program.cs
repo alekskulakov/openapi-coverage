@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -39,7 +41,7 @@ app.MapGet("/meal/{id}/cook", (string id) =>
     return Results.Ok(id);
 });
 
-app.MapGet("/meal/remove", () => Results.Ok());
+app.MapGet("/meal/remove", ([FromQuery(Name = "p")] int? page) => Results.Ok());
 app.MapDelete("/meal/trash", () => Results.Ok());
 app.MapPost("/make/{id}/tasty/{level}", (string id, int level) => Results.Ok(id));
 
