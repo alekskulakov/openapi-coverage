@@ -43,6 +43,7 @@ app.MapGet("/meal/{id}/cook", (string id) =>
 
 app.MapGet("/meal/remove", ([FromQuery(Name = "p")] int? page) => Results.Ok());
 app.MapDelete("/meal/trash", () => Results.Ok());
+app.MapPost("/meal/trash", () => Results.Ok());
 app.MapPost("/make/{id}/tasty/{level}", (string id, int level) => Results.Ok(id));
 
 app.Run();
