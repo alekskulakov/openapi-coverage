@@ -55,7 +55,7 @@ jobs:
       KUSTO_AAD_AUTHORITY_ID: ${{ secrets.KUSTO_AAD_AUTHORITY_ID}}
       KUSTO_AAD_APP_ID: ${{ secrets.KUSTO_AAD_APP_ID }}
       KUSTO_APP_KEY: ${{ secrets.KUSTO_APP_KEY }}
-      KUSTO_DEV_URI: ${{ env.KUSTO_DEV_URI }}
+      KUSTO_DEV_URI: ${{ vars.KUSTO_DEV_URI }}
     steps:
       - name: Download All Artifacts
         uses: actions/download-artifact@v4
