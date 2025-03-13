@@ -51,7 +51,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: "build"
-
+    env:
+      KUSTO_AAD_AUTHORITY_ID: ${{ secrets.KUSTO_AAD_AUTHORITY_ID}} 
     steps:
       - name: Download All Artifacts
         uses: actions/download-artifact@v4
@@ -69,7 +70,7 @@ jobs:
       - run: mv ./openapi-coverage-output/swagger.json ./
         continue-on-error: true          
             
-      - uses: alekskulakov/ci.actions.swaggercoverage@e946b40a870fc4fc5742ad50b7dd5a0c88315b51
+      - uses: alekskulakov/ci.actions.swaggercoverage@d938a9a0332c044f536567c552ba72de418fd292
         with:
           spec-path: 'swagger.json'
           input-path: 'openapi-coverage-output'
