@@ -51,6 +51,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: "build"
+    if: ${{ vars.COVERAGE_SKIP != 'true' }}
     env:
       KUSTO_DEV_URI: ${{ vars.KUSTO_DEV_URI }}
       KUSTO_AAD_AUTHORITY_ID: ${{ secrets.KUSTO_AAD_AUTHORITY_ID}}
