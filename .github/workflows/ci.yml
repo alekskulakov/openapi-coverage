@@ -74,7 +74,7 @@ jobs:
       - run: mv ./openapi-coverage-output/swagger.json ./
         continue-on-error: true          
             
-      - uses: alekskulakov/ci.actions.swaggercoverage@v1.0.23
+      - uses: alekskulakov/ci.actions.swaggercoverage@v1.0.24
         if: ${{ vars.COVERAGE_SKIP != 'true' }}
         with:
           spec-path: 'swagger.json'
