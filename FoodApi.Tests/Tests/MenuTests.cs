@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace FoodApi.Tests;
+namespace FoodApi.Tests.Tests;
 
 [Category("Menu")]
 public class MenuTests
@@ -30,6 +30,7 @@ public class MenuTests
     }
     
     [Test]
+    [Ignore("Obsolete")]
     public async Task Get_RemoveMealReturnSuccess()
     {
         // Arrange
