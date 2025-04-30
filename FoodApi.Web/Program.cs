@@ -43,8 +43,8 @@ app.MapGet("/meal/{id}/cook", (string id) =>
     Console.WriteLine("Starting cooking {0}", id);
     return Results.Ok(id);
 });
-
-app.MapGet("/meal/remove", ([FromQuery(Name = "p")] int? page) => Results.Ok())
+app.MapGet("/meal/remove", ([FromQuery(Name = "p")] int? page) => Results.Ok());
+app.MapGet("/meal/delete", ([FromQuery(Name = "p")] int? page) => Results.Ok())
     .WithOpenApi(operation =>
     {
         operation.Summary = "Удаление приёма пищи";
