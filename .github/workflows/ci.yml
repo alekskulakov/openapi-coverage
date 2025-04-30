@@ -80,6 +80,6 @@ jobs:
           spec-path: 'swagger.json'
           input-path: 'openapi-coverage-output'
           use-minimal-config: false
-          use-full-config: 'false'
+          use-full-config: 'true'
           throw-on-fail: false
           skip-send-to-kusto: true
