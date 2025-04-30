@@ -2,16 +2,19 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Добавляем поддержку Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Включаем Swagger только в Development
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger(options =>
+    {
+        options.RouteTemplate = "openapi/{documentName}.json";
+    });
 }
 
 app.UseHttpsRedirection();
@@ -41,7 +44,15 @@ app.MapGet("/meal/{id}/cook", (string id) =>
     return Results.Ok(id);
 });
 
-// app.MapGet("/meal/remove", ([FromQuery(Name = "p")] int? page) => Results.Ok());
+app.MapGet("/meal/remove", ([FromQuery(Name = "p")] int? page) => Results.Ok())
+    .WithOpenApi(operation =>
+    {
+        operation.Summary = "Удаление приёма пищи";
+        operation.Description = "Этот метод устарел, не используйте его.";
+        operation.Deprecated = true; // ← это отразится в swagger.json
+        return operation;
+    });
+
 app.MapDelete("/meal/trash", () => Results.Ok());
 app.MapPost("/meal/trash", () => Results.Ok());
 app.MapPost("/drinks/trash", () => Results.Ok());
@@ -56,5 +67,5 @@ record Menu(DateOnly Date, int TemperatureC, string? Summary)
 
 public partial class Program
 {
-    public Program(){}
+    public Program() { }
 }

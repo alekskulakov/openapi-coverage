@@ -30,7 +30,6 @@ public class MenuTests
     }
     
     [Test]
-    [Ignore("Obsolete")]
     public async Task Get_RemoveMealReturnSuccess()
     {
         // Arrange
