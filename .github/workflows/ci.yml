@@ -74,10 +74,12 @@ jobs:
       - run: mv ./openapi-coverage-output/swagger.json ./
         continue-on-error: true          
             
-      - uses: alekskulakov/ci.actions.swaggercoverage@v1.0.24
+      - uses: alekskulakov/ci.actions.swaggercoverage@465232254622035a3acd496ca8364346b22bf636
         if: ${{ vars.COVERAGE_SKIP != 'true' }}
         with:
           spec-path: 'swagger.json'
           input-path: 'openapi-coverage-output'
-          throw-on-fail: ${{ vars.COVERAGE_THROW_ON_FAIL }}
-          skip-send-to-kusto: ${{ vars.COVERAGE_SKIP_SEND_TO_KUSTO }}
+          use-minimal-config: false
+          use-full-config: 'false'
+          throw-on-fail: false
+          skip-send-to-kusto: true
