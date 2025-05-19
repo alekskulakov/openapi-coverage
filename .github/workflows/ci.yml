@@ -96,3 +96,4 @@ jobs:
           use-full-config: 'true'
           throw-on-fail: false
           skip-send-to-kusto: true
+          service-name: 'sm'
