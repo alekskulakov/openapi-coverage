@@ -78,7 +78,7 @@ jobs:
           cp openapi-coverage-output/swagger.json jsons/lf.json
           cp openapi-coverage-output/swagger.json jsons/sm.json
 
-      - uses: alekskulakov/ci.actions.swaggercoverage@f802b77c751306aafb2e87e866c9392bbb016d0c
+      - uses: alekskulakov/ci.actions.swaggercoverage@b235ed29faf98c4e4b0ea431415266125c05b3f4
         with:
           spec-path: 'jsons/lf.json'
           input-path: 'openapi-coverage-output'
@@ -88,7 +88,7 @@ jobs:
           skip-send-to-kusto: true
           service-name: 'lf'
           
-      - uses: alekskulakov/ci.actions.swaggercoverage@f802b77c751306aafb2e87e866c9392bbb016d0c
+      - uses: alekskulakov/ci.actions.swaggercoverage@b235ed29faf98c4e4b0ea431415266125c05b3f4
         with:
           spec-path: 'jsons/sm.json'
           input-path: 'openapi-coverage-output'
