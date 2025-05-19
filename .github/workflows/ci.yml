@@ -87,7 +87,7 @@ jobs:
           throw-on-fail: false
           skip-send-to-kusto: true
           
-      - uses: alekskulakov/ci.actions.swaggercoverage@99300d0cc6955e6a2d286c7f205711f88d0a340b
+      - uses: alekskulakov/ci.actions.swaggercoverage@c0181a68d0bf62c07aeb6082ff3b3db1addf2115
         with:
           spec-path: 'jsons/sm.json'
           input-path: 'openapi-coverage-output'
