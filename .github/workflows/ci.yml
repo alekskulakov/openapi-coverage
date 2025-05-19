@@ -71,7 +71,7 @@ jobs:
           failOnError: false
           name: openapi-coverage-*
 
-      - uses: alekskulakov/ci.actions.swaggercoverage@d5996c4ed497cc82b98c11cbdfe38d9b5e98fe5e
+      - uses: alekskulakov/ci.actions.swaggercoverage@99300d0cc6955e6a2d286c7f205711f88d0a340b
         if: ${{ vars.COVERAGE_SKIP != 'true' }}
         with:
           spec-path: 'openapi-coverage-output/swagger.json'
