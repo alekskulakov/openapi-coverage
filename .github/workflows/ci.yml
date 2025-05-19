@@ -70,13 +70,27 @@ jobs:
         with:
           failOnError: false
           name: openapi-coverage-*
+ 
+      - name: Copy templates
+        shell: bash
+        run: |
+          cp -r openapi-coverage-output/swagger.json jsons/lf.json
+          cp -r openapi-coverage-output/swagger.json jsons/sm.json
 
       - uses: alekskulakov/ci.actions.swaggercoverage@99300d0cc6955e6a2d286c7f205711f88d0a340b
-        if: ${{ vars.COVERAGE_SKIP != 'true' }}
         with:
-          spec-path: 'openapi-coverage-output/swagger.json'
+          spec-path: 'jsons/lf.json'
           input-path: 'openapi-coverage-output'
-          use-minimal-config: true
+          use-minimal-config: false
+          use-full-config: 'true'
+          throw-on-fail: false
+          skip-send-to-kusto: true
+          
+      - uses: alekskulakov/ci.actions.swaggercoverage@99300d0cc6955e6a2d286c7f205711f88d0a340b
+        with:
+          spec-path: 'jsons/sm.json'
+          input-path: 'openapi-coverage-output'
+          use-minimal-config: false
           use-full-config: 'true'
           throw-on-fail: false
           skip-send-to-kusto: true
