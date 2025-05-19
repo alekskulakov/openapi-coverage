@@ -74,8 +74,9 @@ jobs:
       - name: Copy templates
         shell: bash
         run: |
-          cp -r openapi-coverage-output/swagger.json jsons/lf.json
-          cp -r openapi-coverage-output/swagger.json jsons/sm.json
+          mkdir -p jsons
+          cp openapi-coverage-output/swagger.json jsons/lf.json
+          cp openapi-coverage-output/swagger.json jsons/sm.json
 
       - uses: alekskulakov/ci.actions.swaggercoverage@99300d0cc6955e6a2d286c7f205711f88d0a340b
         with:
