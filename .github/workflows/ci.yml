@@ -77,6 +77,7 @@ jobs:
           mkdir -p jsons
           cp openapi-coverage-output/swagger.json jsons/lf.json
           cp openapi-coverage-output/swagger.json jsons/sm.json
+          rm openapi-coverage-output/swagger.json
 
       - uses: alekskulakov/ci.actions.swaggercoverage@v1.0.27
         with:
