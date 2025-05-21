@@ -78,7 +78,7 @@ jobs:
           cp openapi-coverage-output/swagger.json jsons/lf.json
           cp openapi-coverage-output/swagger.json jsons/sm.json
 
-      - uses: alekskulakov/ci.actions.swaggercoverage@v1.0.26
+      - uses: alekskulakov/ci.actions.swaggercoverage@v1.0.27
         with:
           spec-path: 'jsons/lf.json'
           input-path: 'openapi-coverage-output'
@@ -87,7 +87,7 @@ jobs:
           throw-on-fail: false
           service-name: 'lf'
           
-      - uses: alekskulakov/ci.actions.swaggercoverage@v1.0.26
+      - uses: alekskulakov/ci.actions.swaggercoverage@v1.0.27
         with:
           spec-path: 'jsons/sm.json'
           input-path: 'openapi-coverage-output'
