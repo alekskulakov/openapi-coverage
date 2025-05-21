@@ -94,3 +94,4 @@ jobs:
           use-minimal-config: false
           use-full-config: 'true'
           throw-on-fail: false
+          service-name: 'sm'
