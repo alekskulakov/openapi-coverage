@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace FoodApi.Tests;
+namespace FoodApi.Tests.Tests;
 
 [Category("Other")]
-public class GeneratorTests
+public class SwaggerTests
 {
     private readonly WebApplicationFactory<Program> _factory = new();
 
